@@ -48,6 +48,7 @@ Ladders.prototype.init = function() {
 };
 
 Ladders.prototype.draw = function() {
+    this.ctx.beginPath();
     var i,j;
     for(i=0; i<FloorStores.laddersMap.length; i++) {
         for(j=0; j<FloorStores.laddersMap[i].length; j++) {
@@ -55,13 +56,16 @@ Ladders.prototype.draw = function() {
             var startX, startY;
             startX = 5 + tile.x;
             startY = tile.y - FloorStores.spaceBetweenFloor + FloorStores.tileHeight;
-            this.ctx.rect(startX, startY, 5, 80);
-            this.ctx.rect(startX + 25, startY, 5, 80);
-            this.ctx.rect(startX, startY + 5, 30, 6);
-            this.ctx.rect(startX, startY + 20, 30, 6);
-            this.ctx.rect(startX, startY + 35, 30, 6);
-            this.ctx.rect(startX, startY + 50, 30, 6);
-            this.ctx.rect(startX, startY + 65, 30, 6);
+            this.ctx.fillStyle="#00e8d8";
+            this.ctx.fillRect(startX, startY, 3, 80);
+            this.ctx.fillRect(startX + 25, startY, 3, 80);
+            this.ctx.fillRect(startX, startY + 3, 25, 3);
+            this.ctx.fillRect(startX, startY + 15, 25, 3);
+            this.ctx.fillRect(startX, startY + 27, 25, 3);
+            this.ctx.fillRect(startX, startY + 39, 25, 3);
+            this.ctx.fillRect(startX, startY + 51, 25, 3);
+            this.ctx.fillRect(startX, startY + 63, 25, 3);
+            this.ctx.fillRect(startX, startY + 75, 25, 3);
             this.ctx.stroke();
         }
     }

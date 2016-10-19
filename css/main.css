@@ -3,6 +3,7 @@ html, body {
     height: 100%;
     padding: 0;
     margin: 0;
+    background-color: #232323;
 }
 
 #wrapper {
@@ -20,5 +21,6 @@ html, body {
 }
 
 canvas {
-    border: 1px solid grey;
+    /*border: 1px solid grey;*/
+    background-color: black;
 }

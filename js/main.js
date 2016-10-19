@@ -1,4 +1,4 @@
-var floorsManager, player, ladders;
+var floorsManager, player, ladders, bucket;
 function init() {
     initCanvas();
 }
@@ -19,6 +19,7 @@ function initCanvas() {
     initPlayer();
     initKeyBoard();
     setInterval(draw, 10);
+    initBucket();
 }
 
 function initFloor() {
@@ -33,12 +34,18 @@ function initPlayer() {
     player = new Player();
 }
 
+function initBucket(){
+    bucket = new Bucket();
+}
+
 function draw() {
     GameStores.getCanvasContext().clearRect(0,0,GameStores.sceneWidth, GameStores.sceneHeight);
     GameStores.getCanvasContext().beginPath();
     floorsManager.draw();
     ladders.draw();
     player.draw();
+
+    bucket.draw();
 }
 
 function initKeyBoard() {
@@ -46,20 +53,17 @@ function initKeyBoard() {
         switch (event.keyCode) {
             case 37:
                 player.direction = 'left';
-                //player.move('left');
                 break;
             case 39:
-                //player.move('right');
                 player.direction = 'right';
-                console.log("right");
                 break;
             case 32:
-                player.jump();
-
-                console.log("jump");
+                player.startJump();
                 break;
             case 38:
-                player.climb("up");
+                if(!player.isJump) {
+                    player.climb("up");
+                }
                 break;
             case 40:
                 if(!player.isJump) {
@@ -69,7 +73,6 @@ function initKeyBoard() {
             default:
                 break;
         }
-
     });
 
     document.addEventListener('keyup', function(event){

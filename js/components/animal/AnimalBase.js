@@ -2,18 +2,19 @@ var AnimalBase = function(_store) {
     this.stepDistance = _store.stepDistance;
     this.jumpDistance = _store.jumpDistance;
     this.store = _store;
+    this.direction = null;
     this.startJumpY;
     this.destJumpY;
     this.destFallY;
     this.isJump = false;
     this.isClimb = false;
     this.isFall = false;
-    this.direction = null;
+
+    this.lastDirection = 'right';
 };
 
 AnimalBase.prototype.move = function(direction) {
     var posX = 0, posY = 0;
-    // this.direction = direction;
     switch (direction) {
         case 'left':
             if(this.isJump || this.isClimb || this.isFall) {
@@ -29,11 +30,9 @@ AnimalBase.prototype.move = function(direction) {
             break;
 
         case 'right':
-            // console.log(this.isJump);
             if(this.isJump || this.isClimb || this.isFall) {
                 return;
             };
-            // console.log("walk right");
             posX = this.store.getPositions().x + this.stepDistance;
             posY = this.store.getPositions().y;
             if(posX > GameStores.sceneWidth - this.store.bodyWidth) {
@@ -45,10 +44,12 @@ AnimalBase.prototype.move = function(direction) {
         default:
             break;
     }
+    this.lastDirection = direction;
 };
 
-AnimalBase.prototype.jump = function() {
-    if(this.isJump || this.isFall || this.isClimb) {
+//---------------------jump-------------------------
+AnimalBase.prototype.startJump = function() {
+    if(this.isJump || this.isClimb || this.isFall) {
         return;
     }
     this.startJumpY = this.store.getPositions().y;
@@ -57,7 +58,10 @@ AnimalBase.prototype.jump = function() {
     this.isJump = true;
 };
 
-AnimalBase.prototype.startJump = function() {
+AnimalBase.prototype.jump = function() {
+    if(this.isFall) {
+        return;
+    }
     var posX = this.store.getPositions().x,
         posY = this.store.getPositions().y;
 
@@ -86,6 +90,7 @@ AnimalBase.prototype.startJump = function() {
     this.store.setPositions(posX, posY);
 };
 
+//-------------------climb----------------------------
 AnimalBase.prototype.climb = function(direction) {
     var i,
         posX = this.store.getPositions().x,
@@ -178,7 +183,7 @@ AnimalBase.prototype.collideFloor = function() {
     }
 };
 
-AnimalBase.prototype.startFall = function() {
+AnimalBase.prototype.fall = function() {
     var posX = this.store.getPositions().x,
         posY = this.store.getPositions().y;
         posY += 2;

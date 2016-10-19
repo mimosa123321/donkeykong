@@ -3,7 +3,7 @@ const FloorStores = {
     tileHeight: 20,
     totalFloor: 6,
     spaceBetweenFloor: 100,
-    minTiles: 8,
+    minTiles: 12,
     maxHoles: 2,
     floorsMap: [],
     laddersMap: [],
