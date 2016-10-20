@@ -3,6 +3,8 @@ var DonkeyStores = {
         x:0,
         y:0
     },
+    width: 63,
+    height: 52,
     throwDirection: "left",
     isThrow: false,
     spriteFrames: {

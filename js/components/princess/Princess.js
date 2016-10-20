@@ -16,6 +16,10 @@ Princess.prototype.init = function() {
         y: startPoint.y
     };
 
+    //for player collision
+    PrincessStores.pos.x = this.pos.x;
+    PrincessStores.pos.y = this.pos.y;
+
     this.princessImg = new Image();
     this.princessImg.onload = function() {
         GameStores.getCanvasContext().drawImage(this, _this.pos.x, _this.pos.y , 0, 0);
@@ -30,7 +34,17 @@ Princess.prototype.setStartPoint = function() {
 };
 
 Princess.prototype.draw = function() {
-    this.animation.help();
+    if(!PlayerStores.isWin && !PlayerStores.isDie) {
+        this.animation.help();
+    }
+
+    if(PlayerStores.isWin) {
+        this.animation.giveHeart();
+    }
+
+    if(PlayerStores.isDie) {
+        this.animation.heartBreak();
+    }
 
     this.animPosX = this.animation.posX;
     this.animposY = this.animation.posY;

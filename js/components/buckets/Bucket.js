@@ -86,7 +86,7 @@ Bucket.prototype.collideLadder = function() {
 
 Bucket.prototype.draw = function() {
 
-    if(!PlayerStores.isDie) {
+    if(!PlayerStores.isDie && !PlayerStores.isWin) {
         if(this.collideHole()) {
             this.isFall = true;
         }

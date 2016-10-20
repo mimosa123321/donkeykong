@@ -55,7 +55,7 @@ Donkey.prototype.setStartPoint = function() {
 
 Donkey.prototype.draw = function() {
 
-    if(!PlayerStores.isDie) {
+    if(!PlayerStores.isDie && !PlayerStores.isWin) {
         this.currentTime += 1;
 
         if(this.currentTime >= this.introTimer) {
@@ -93,12 +93,15 @@ Donkey.prototype.draw = function() {
         if(!this.isBeat && !DonkeyStores.isThrow) {
             this.animation.stand();
         }
-    }else {
-        // this.animation.dead();
+    }
+
+    if(PlayerStores.isDie) {
         this.animation.win();
     }
 
-
+    if(PlayerStores.isWin) {
+        this.animation.dead();
+    }
 
     this.animPosX = this.animation.posX;
     this.animposY = this.animation.posY;

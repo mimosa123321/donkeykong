@@ -36,27 +36,29 @@ Player.prototype.collideBucket = function() {
             this.die();
             return;
         }
-        /*var bucketObj = {
-            x: bucket.pos.x,
-            y: bucket.pos.y,
-            r: bucket.radius * 0.5
-        };
-        var playerObj = {
-            x: this.pos.x,
-            y: this.pos.y,
-            w: PlayerStores.bodyWidth,
-            h: PlayerStores.bodyHeight
-        };*/
-        // console.log(rectCircleColliding(bucketObj,playerObj));
-        // if(rectCircleColliding(bucketObj,playerObj)) {
-        //     console.log('die');
-        // }
+    }
+};
+
+Player.prototype.collideDockey = function() {
+    if(this.pos.x + PlayerStores.bodyWidth >= DonkeyStores.pos.x && this.pos.x <= DonkeyStores.pos.x + DonkeyStores.width && this.store.currentLevel === 5) {
+        this.die();
+        return;
+    }
+};
+
+Player.prototype.collidePrincess = function() {
+    if(this.pos.x + PlayerStores.bodyWidth >= PrincessStores.pos.x && this.pos.x <= PrincessStores.pos.x + PrincessStores.width && this.store.currentLevel === 6) {
+        this.win();
+        return;
     }
 };
 
 Player.prototype.die = function() {
     PlayerStores.isDie = true;
-    // this.isDie = true;
+};
+
+Player.prototype.win = function() {
+    PlayerStores.isWin = true;
 };
 
 Player.prototype.draw = function() {
@@ -66,7 +68,7 @@ Player.prototype.draw = function() {
     var height;
     var animation;
 
-    if(!PlayerStores.isDie) {
+    if(!PlayerStores.isDie && !PlayerStores.isWin) {
         if(this.direction) {
             animation = PlayerAnimation.walk(this.direction);
             this.move(this.direction);
@@ -92,14 +94,22 @@ Player.prototype.draw = function() {
         }
 
         this.collideBucket();
+        this.collideDockey();
+        this.collidePrincess();
 
         //update floor level when its state is not jump - have errors when update currentlevel when jump
         if(!this.isJump) {
             this.store.currentLevel =  this.updateFloorLevel();
         }
-    }else {
+    }
+
+    if(PlayerStores.isDie) {
         this.pos.y = FloorStores.getLevels()[this.store.currentLevel].posY - PlayerStores.bodyHeight;
         animation = PlayerAnimation.die(this.lastDirection);
+    }
+
+    if(PlayerStores.isWin) {
+        animation = PlayerAnimation.stand(this.lastDirection);
     }
 
     if(animation) {
@@ -110,23 +120,7 @@ Player.prototype.draw = function() {
 
         GameStores.getCanvasContext().drawImage(this.player, posX, posY, width, height, this.pos.x, this.pos.y, width, height);
     }
-
-
 };
-
-/*function rectCircleColliding(circle,rect){
-    var distX = Math.abs(circle.x - rect.x-rect.w/2);
-    var distY = Math.abs(circle.y - rect.y-rect.h/2);
-
-    // console.log(distX,distY);
-    if (distX > (rect.w/2 + circle.r)) { return false; }
-    if (distY > (rect.h/2 + circle.r)) { return false; }
-    if (distX <= (rect.w/2)) { return true; }
-    if (distY <= (rect.h/2)) { return true; }
-    var dx=distX-rect.w/2;
-    var dy=distY-rect.h/2;
-    return (dx*dx+dy*dy<=(circle.r*circle.r));
-}*/
 
 
 
