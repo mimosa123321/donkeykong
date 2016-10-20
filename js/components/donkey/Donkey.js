@@ -3,7 +3,7 @@ var Donkey = function() {
     this.currentLevel = 5;
     this.animation;
     this.isBeat = true;
-    // this.isThrow = false;
+    this.isStartIntro = false;
     this.currentTime = 0;
     this.introTimer = 100;
 
@@ -39,27 +39,45 @@ Donkey.prototype.init = function() {
         GameStores.getCanvasContext().drawImage(this, _this.pos.x, _this.pos.y , 0, 0);
     };
     this.donkeyImg.src = './images/donkeyss.png';
+
+    this.isStartIntro = true;
 };
 
 Donkey.prototype.setStartPoint = function() {
+    console.log(FloorStores.getLadderMap()[this.currentLevel - 1]);
     var topFloor  = FloorStores.getFloorsMap()[this.currentLevel].floorMap;
     for(var i=8; i<topFloor.length; i++) {
         var tile = topFloor[i];
         var nextTile = topFloor[i + 1];
 
         if(tile.type  === "block" && nextTile.type === "block") {
-            return {x: tile.x, y: tile.y}
+            console.log(tile.x);
+            for(var j=0; j<FloorStores.getLadderMap()[this.currentLevel - 1].length; j++) {
+                var ladder = FloorStores.getLadderMap()[this.currentLevel - 1][j];
+                if(tile.x != ladder.x && nextTile.x != ladder.x) {
+                    return {x: tile.x, y: tile.y}
+                }
+
+            }
+
+
         }
     }
+
+
 };
 
 Donkey.prototype.draw = function() {
 
     if(!PlayerStores.isDie && !PlayerStores.isWin) {
-        this.currentTime += 1;
 
-        if(this.currentTime >= this.introTimer) {
-            this.isBeat = false;
+        if(this.isStartIntro) {
+            this.currentTime += 1;
+
+            if(this.currentTime >= this.introTimer) {
+                this.isBeat = false;
+                this.isStartIntro = false;
+            }
         }
 
         if(this.isBeat) {
@@ -111,6 +129,36 @@ Donkey.prototype.draw = function() {
     this.ctx.beginPath();
     this.ctx.drawImage(this.donkeyImg, this.animPosX, this.animposY , this.animWidth, this.animHeight, this.pos.x, this.pos.y - this.animHeight, this.animWidth, this.animHeight - 1);
 };
+
+
+Donkey.prototype.reset = function() {
+    var _this = this;
+
+    this.animation;
+
+    this.currentTime = 0;
+    this.introTimer = 100;
+
+    this.currentThrowTimer= 0;
+    this.throwTimer= 200;
+
+    this.currentThrowAnimTimer = 0;
+    this.throwAnimTimer = 100;
+
+    this.throwDirection = null;
+
+    DonkeyStores.isThrow = false;
+
+    this.isBeat = true;
+
+    setTimeout(function(){
+        _this.isStartIntro = true;
+    }, 1000);
+
+};
+
+
+
 
 
 

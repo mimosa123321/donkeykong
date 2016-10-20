@@ -8,11 +8,12 @@ var Floor = function(_level) {
 Floor.LEVELS = FloorStores.getLevels();
 Floor.MAX_TILES = FloorStores.getMaxTiles();
 Floor.MIN_TILES = FloorStores.minTiles;
-Floor.MAX_HOLES = FloorStores.maxHoles;
 
 
 Floor.prototype.init = function() {
     var i, floorProps = {};
+
+    Floor.MAX_HOLES = (this.level  === 6)? 1 : FloorStores.maxHoles;
 
     //the amount of tiles is the floor
     if(this.level === 1) {
@@ -62,8 +63,6 @@ Floor.prototype.init = function() {
         };
         this.floorMap.push(floorProps);
     }
-
-    
 };
 
 Floor.prototype.draw = function() {

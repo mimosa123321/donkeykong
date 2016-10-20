@@ -1,5 +1,6 @@
 var floorsManager, player, ladders, bucketsManager, donkey, princess;
 function init() {
+    this.isShowPanel = false;
     initCanvas();
 }
 
@@ -18,10 +19,11 @@ function initCanvas() {
     initLadder();
     initPlayer();
     initKeyBoard();
-    setInterval(draw, 10);
     initBucket();
     initDockey();
     initPrincess();
+
+    setInterval(draw, 10);
 }
 
 function initFloor() {
@@ -58,7 +60,91 @@ function draw() {
     bucketsManager.draw();
     donkey.draw();
     princess.draw();
+
+
+    /*------------------die----------------------*/
+    if(!this.isShowPanel && PlayerStores.isDie) {
+        this.isShowPanel = true;
+        goDie();
+    }
+
+    /*-----------------win---------------------------*/
+    if(!this.isShowPanel && PlayerStores.isWin) {
+        this.isShowPanel = true;
+        goNextLevel();
+    }
 }
+
+function goDie() {
+    PlayerStores.totalLife -= 1;
+
+    //showPanel
+    setTimeout(function(){
+        UIElements.showPanel("die");
+        UIElements.updateLifes();
+    },1500);
+
+    if(PlayerStores.totalLife <= 0) {
+        setTimeout(function(){
+            UIElements.showPanel("gameOver");
+        },3000);
+        return;
+    }
+
+    //hidePanel
+    setTimeout(function(){
+        UIElements.hidePanel();
+        resetLevel();
+        this.isShowPanel = false;
+    },4000);
+}
+
+function goNextLevel() {
+    GameStores.level += 1;
+
+    if(GameStores.level > GameStores.maxLevel) {
+        setTimeout(function(){
+            UIElements.showPanel("win");
+        },1500);
+        return;
+    }
+
+    setTimeout(function(){
+        UIElements.showPanel("nextLevel");
+        UIElements.updateLevels();
+    },1500);
+
+    //hidePanel
+    setTimeout(function(){
+        UIElements.hidePanel();
+        newLevel();
+        this.isShowPanel = false;
+    },4000);
+}
+
+function resetLevel() {
+    player.reset();
+    bucketsManager.reset();
+    donkey.reset();
+
+    PlayerStores.isDie = false;
+    PlayerStores.isWin = false;
+}
+
+function newLevel() {
+    floorsManager.reset();
+    ladders.reset();
+
+    player.reset();
+    bucketsManager.reset();
+    donkey.reset();
+    donkey.init();
+
+    PlayerStores.isDie = false;
+    PlayerStores.isWin = false;
+}
+
+
 
 function initKeyBoard() {
     document.addEventListener('keydown', function(event){
@@ -88,7 +174,6 @@ function initKeyBoard() {
     });
 
     document.addEventListener('keyup', function(event){
-        // console.log('up : ', event.keyCode);
         if(event.keyCode === 39 || event.keyCode === 37) {
             player.restoreKey();
         }

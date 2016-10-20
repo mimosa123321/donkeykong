@@ -16,6 +16,11 @@ FloorsManager.prototype.draw = function() {
         var floor = floorsMap[i];
         floor.draw();
     }
+};
 
+FloorsManager.prototype.reset = function() {
+    FloorStores.floorsMap = [];
+    FloorStores.laddersMap = [];
 
+    this.initFloor()
 };

@@ -99,3 +99,8 @@ Ladders.prototype.isLadder = function() {
     }
 };
 
+Ladders.prototype.reset = function() {
+    this.isLevelSixFirstLadder = false;
+    this.init();
+};
+

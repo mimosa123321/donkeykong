@@ -14,7 +14,7 @@ BucketsManager.prototype.initBucket = function() {
 BucketsManager.prototype.draw = function() {
     if(DonkeyStores.isThrow && !this.isOutBucket) {
         if(this.noOfBucket >= this.maxBuckets) {
-            this.reset();
+            this.reuse();
         }else {
             this.noOfBucket += 1;
             this.initBucket();
@@ -34,7 +34,7 @@ BucketsManager.prototype.draw = function() {
     }
 };
 
-BucketsManager.prototype.reset = function() {
+BucketsManager.prototype.reuse = function() {
     var i, buckets = BucketStores.buckets;
     for(i=0; i<buckets.length; i++) {
         var bucket = buckets[i];
@@ -43,5 +43,11 @@ BucketsManager.prototype.reset = function() {
             break;
         }
     }
+};
+
+BucketsManager.prototype.reset = function() {
+    this.noOfBucket = 0;
+    this.isOutBucket = false;
+    BucketStores.buckets = [];
 };
 

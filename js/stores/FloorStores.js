@@ -1,4 +1,4 @@
-const FloorStores = {
+var FloorStores = {
     tileWidth: 40,
     tileHeight: 20,
     totalFloor: 7,

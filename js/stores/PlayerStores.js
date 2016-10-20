@@ -6,6 +6,7 @@ const PlayerStores = {
     currentLevel: 0,
     isDie: false,
     isWin: false,
+    totalLife : 3,
     spriteFrames: {
         stand:{
             'right':[{x:2,y:2,width:21,height:42}],

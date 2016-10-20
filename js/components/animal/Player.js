@@ -1,4 +1,13 @@
 var Player = function() {
+    this.direction = null;
+    this.startJumpY;
+    this.destJumpY;
+    this.destFallY;
+    this.isJump = false;
+    this.isClimb = false;
+    this.isFall = false;
+    this.lastDirection = 'right';
+
     AnimalBase.call(this, PlayerStores);
     this.setInitialPosition();
     this.init();
@@ -104,7 +113,13 @@ Player.prototype.draw = function() {
     }
 
     if(PlayerStores.isDie) {
-        this.pos.y = FloorStores.getLevels()[this.store.currentLevel].posY - PlayerStores.bodyHeight;
+        // this.pos.y = FloorStores.getLevels()[this.store.currentLevel].posY - PlayerStores.bodyHeight;
+        if(this.pos.y < FloorStores.getLevels()[this.store.currentLevel].posY - PlayerStores.bodyHeight) {
+            this.pos.y += 2;
+        }
+        if(this.pos.y >= FloorStores.getLevels()[this.store.currentLevel].posY - PlayerStores.bodyHeight) {
+            this.pos.y = FloorStores.getLevels()[this.store.currentLevel].posY - PlayerStores.bodyHeight;
+        }
         animation = PlayerAnimation.die(this.lastDirection);
     }
 
@@ -120,6 +135,20 @@ Player.prototype.draw = function() {
 
         GameStores.getCanvasContext().drawImage(this.player, posX, posY, width, height, this.pos.x, this.pos.y, width, height);
     }
+};
+
+
+Player.prototype.reset = function() {
+    this.direction = null;
+    this.startJumpY;
+    this.destJumpY;
+    this.destFallY;
+    this.isJump = false;
+    this.isClimb = false;
+    this.isFall = false;
+    this.lastDirection = 'right';
+
+    this.setInitialPosition();
 };
 
 

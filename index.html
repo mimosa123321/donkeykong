@@ -10,6 +10,7 @@
     <script type="application/javascript" src="js/stores/BucketStores.js"></script>
     <script type="application/javascript" src="js/stores/DonkeyStores.js"></script>
     <script type="application/javascript" src="js/stores/PrincessStores.js"></script>
+    <script type="application/javascript" src="js/components/ui/UIElements.js"></script>
     <script type="application/javascript" src="js/components/floors/FloorsManager.js"></script>
     <script type="application/javascript" src="js/components/floors/Floor.js"></script>
     <script type="application/javascript" src="js/components/ladders/Ladders.js"></script>
@@ -25,13 +26,41 @@
     <script type="application/javascript" src="js/components/buckets/BucketAnimation.js"></script>
     <script type="application/javascript" src="js/components/buckets/BucketsManager.js"></script>
     <script type="application/javascript" src="js/components/buckets/Bucket.js"></script>
-
-
     <script type="application/javascript" src="js/main.js"></script>
 </head>
 <body>
 
 <div id="wrapper">
+    <div id="panel">
+        <div id="die">
+            <img src="images/lifescreen.png">
+            <img src="images/lifescreen.png">
+            <img src="images/lifescreen.png">
+        </div>
+
+        <div id="gameOver">
+            <div id="gameoverImg"></div>
+            <h1>Game Over</h1>
+        </div>
+
+        <div id="nextLevel">
+            <h1></h1>
+        </div>
+
+        <div id="win">
+            <div id="winImg"></div>
+            <h1>You got her!</h1>
+        </div>
+    </div>
+    <div id="marioLife">
+        <img src="images/life.png">
+        <img src="images/life.png">
+        <img src="images/life.png">
+    </div>
+    <div id="gameLevels">
+        <h1>Level 1</h1>
+    </div>
+
     <div id="gameScene">
         <canvas id="canvas"></canvas>
     </div>

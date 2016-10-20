@@ -2,15 +2,6 @@ var AnimalBase = function(_store) {
     this.stepDistance = _store.stepDistance;
     this.jumpDistance = _store.jumpDistance;
     this.store = _store;
-    this.direction = null;
-    this.startJumpY;
-    this.destJumpY;
-    this.destFallY;
-    this.isJump = false;
-    this.isClimb = false;
-    this.isFall = false;
-
-    this.lastDirection = 'right';
 };
 
 AnimalBase.prototype.move = function(direction) {
