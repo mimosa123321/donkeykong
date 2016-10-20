@@ -1,4 +1,4 @@
-var floorsManager, player, ladders, bucket;
+var floorsManager, player, ladders, bucketsManager;
 function init() {
     initCanvas();
 }
@@ -35,7 +35,7 @@ function initPlayer() {
 }
 
 function initBucket(){
-    bucket = new Bucket();
+    bucketsManager = new BucketsManager();
 }
 
 function draw() {
@@ -43,9 +43,9 @@ function draw() {
     GameStores.getCanvasContext().beginPath();
     floorsManager.draw();
     ladders.draw();
-    player.draw();
 
-    bucket.draw();
+    player.draw();
+    bucketsManager.draw();
 }
 
 function initKeyBoard() {

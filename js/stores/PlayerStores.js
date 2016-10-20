@@ -1,15 +1,10 @@
 const PlayerStores = {
-    // bodyWidth: 40,
-    // bodyHeight: 40,
     bodyWidth: 21,
     bodyHeight: 41,
     stepDistance: 1,
     jumpDistance: 40,
     currentLevel: 0,
-    positions: {
-        x: 0,
-        y: 0
-    },
+    isDie: false,
     spriteFrames: {
         stand:{
             'right':[{x:2,y:2,width:21,height:42}],
@@ -23,14 +18,10 @@ const PlayerStores = {
             'right':[{x:230,y:2,width:39,height:42}],
             'left':[{x:271,y:2,width:39,height:42}]
         },
-        climb: [{x:312, y:2,width:23,height:46}]
-    },
-    setPositions: function(_x, _y) {
-        this.positions.x = _x;
-        this.positions.y = _y;
-    },
-
-    getPositions: function() {
-        return PlayerStores.positions;
+        climb: [{x:312, y:2,width:23,height:46}],
+        die: {
+            'right':[{x:25,y:2,width:43,height:42}],
+            'left':[{x:70,y:2,width:43,height:42}]
+        }
     }
 };

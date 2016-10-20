@@ -67,6 +67,21 @@ const PlayerAnimation = {
         this.height = frames[0].height;
 
         return {"posX":this.posX, "posY":this.posY, "width":this.width, "height":this.height};
+    },
+
+    die: function(direction) {
+        var frames = [];
+        if(direction === 'left') {
+            frames = PlayerStores.spriteFrames.die.left;
+        }else {
+            frames = PlayerStores.spriteFrames.die.right;
+        }
+        this.posX = frames[0].x;
+        this.posY = frames[0].y;
+        this.width = frames[0].width;
+        this.height = frames[0].height;
+
+        return {"posX":this.posX, "posY":this.posY, "width":this.width, "height":this.height};
     }
 
 };

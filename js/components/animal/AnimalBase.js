@@ -20,25 +20,29 @@ AnimalBase.prototype.move = function(direction) {
             if(this.isJump || this.isClimb || this.isFall) {
                 return;
             };
-            posX = this.store.getPositions().x - this.stepDistance;
-            posY = this.store.getPositions().y;
+            posX = this.pos.x - this.stepDistance;
+            posY = this.pos.y;
             if(posX < 0) {
                 posX = 0;
             }
-            
-            this.store.setPositions(posX, posY);
+
+            this.pos.x = posX;
+            this.pos.y = posY;
             break;
 
         case 'right':
             if(this.isJump || this.isClimb || this.isFall) {
                 return;
             };
-            posX = this.store.getPositions().x + this.stepDistance;
-            posY = this.store.getPositions().y;
+            posX = this.pos.x + this.stepDistance;
+            posY = this.pos.y;
             if(posX > GameStores.sceneWidth - this.store.bodyWidth) {
                 posX = GameStores.sceneWidth - this.store.bodyWidth;
             }
-            this.store.setPositions(posX, posY);
+
+            this.pos.x = posX;
+            this.pos.y = posY;
+            // this.store.setPositions(posX, posY);
             break;
 
         default:
@@ -52,7 +56,7 @@ AnimalBase.prototype.startJump = function() {
     if(this.isJump || this.isClimb || this.isFall) {
         return;
     }
-    this.startJumpY = this.store.getPositions().y;
+    this.startJumpY = this.pos.y;
     this.destJumpY = this.startJumpY - this.jumpDistance;
     this.speed = 1;
     this.isJump = true;
@@ -62,8 +66,8 @@ AnimalBase.prototype.jump = function() {
     if(this.isFall) {
         return;
     }
-    var posX = this.store.getPositions().x,
-        posY = this.store.getPositions().y;
+    var posX = this.pos.x,
+        posY = this.pos.y;
 
     if(this.direction === 'left') {
         posX -= 1.5;
@@ -81,20 +85,25 @@ AnimalBase.prototype.jump = function() {
         this.speed *= -1;
     }else if( posY > this.startJumpY) {
         posY = this.startJumpY;
-        this.store.setPositions(posX, posY);
+
+        this.pos.x = posX;
+        this.pos.y = posY;
+        // this.store.setPositions(posX, posY);
         this.isJump = false;
         return;
     }
 
     posY -= this.speed;
-    this.store.setPositions(posX, posY);
+    this.pos.x = posX;
+    this.pos.y = posY;
+    // this.store.setPositions(posX, posY);
 };
 
 //-------------------climb----------------------------
 AnimalBase.prototype.climb = function(direction) {
     var i,
-        posX = this.store.getPositions().x,
-        posY = this.store.getPositions().y,
+        posX = this.pos.x,
+        posY = this.pos.y,
         centerX = posX + (this.store.bodyWidth * 0.5),
         currentLevel = this.store.currentLevel,
         destY,
@@ -153,14 +162,16 @@ AnimalBase.prototype.climb = function(direction) {
                     break;
             }
 
-            this.store.setPositions(posX, posY);
+            this.pos.x = posX;
+            this.pos.y = posY;
+            // this.store.setPositions(posX, posY);
         }
     }
 };
 
 AnimalBase.prototype.collideFloor = function() {
     var i,
-        posX = this.store.getPositions().x,
+        posX = this.pos.x,
         currentLevel = this.store.currentLevel,
         floor = FloorStores.getFloorsMap()[currentLevel].floorMap;
 
@@ -184,20 +195,22 @@ AnimalBase.prototype.collideFloor = function() {
 };
 
 AnimalBase.prototype.fall = function() {
-    var posX = this.store.getPositions().x,
-        posY = this.store.getPositions().y;
+    var posX = this.pos.x,
+        posY = this.pos.y;
         posY += 2;
 
     if(posY + this.store.bodyHeight >= this.destFallY) {
         posY = this.destFallY - this.store.bodyHeight;
         this.isFall = false;
     }
-    this.store.setPositions(posX, posY);
+    this.pos.x = posX;
+    this.pos.y = posY;
+    // this.store.setPositions(posX, posY);
 };
 
 AnimalBase.prototype.updateFloorLevel = function() {
     var i,
-        posY = this.store.getPositions().y + this.store.bodyHeight,
+        posY = this.pos.y + this.store.bodyHeight,
         levels = FloorStores.getLevels();
     for(i=0; i<levels.length; i++) {
         var levelPosY = levels[i].posY;
@@ -219,6 +232,7 @@ AnimalBase.prototype.updateFloorLevel = function() {
         }
     }
 };
+
 
 AnimalBase.prototype.restoreKey = function() {
     this.direction = null;

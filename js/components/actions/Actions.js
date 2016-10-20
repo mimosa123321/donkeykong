@@ -1,24 +1,43 @@
 var Actions = {
-    move: function(x, y, width, height, direction, distance) {
-        var posX, posY;
+    move: function(x, y, width, height, direction, distance, reset) {
+        var posX, posY, isReset = false;
         switch (direction) {
             case 'left':
                 posX = x - distance;
                 posY = y;
                 if(posX < 0) {
-                    posX = 0;
+                    if(!reset) {
+                        posX = 0;
+                        isReset = false;
+                    }
                 }
 
-                return {x:posX, y:posY};
+                if(reset) {
+                    if(posX < 0 - 10) {
+                        isReset = true;
+                    }
+                }
+
+                return {x:posX, y:posY, isReset:isReset};
                 break;
 
             case 'right':
                 posX = x + distance;
                 posY = y;
                 if(posX > GameStores.sceneWidth - width) {
-                    posX = GameStores.sceneWidth - width;
+                    if(!reset) {
+                        posX = GameStores.sceneWidth - width;
+                        isReset = false;
+                    }
                 }
-                return {x:posX, y:posY};
+
+                if(reset) {
+                    if(posX > GameStores.sceneWidth + 10) {
+                        isReset = true;
+                    }
+                }
+
+                return {x:posX, y:posY, isReset: isReset};
                 break;
             default:
                 break;
