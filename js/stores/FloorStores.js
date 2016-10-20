@@ -1,7 +1,7 @@
 const FloorStores = {
     tileWidth: 40,
     tileHeight: 20,
-    totalFloor: 6,
+    totalFloor: 7,
     spaceBetweenFloor: 100,
     minTiles: 12,
     maxHoles: 2,

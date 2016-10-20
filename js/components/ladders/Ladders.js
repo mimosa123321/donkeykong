@@ -1,6 +1,8 @@
 var Ladders = function(){
+    this.isLevelSixFirstLadder = false;
     this.ctx = GameStores.getCanvasContext();
     this.init();
+
 };
 
 Ladders.prototype.init = function() {
@@ -23,19 +25,37 @@ Ladders.prototype.init = function() {
             //ensure the ladder built between block
             if(tile.type === 'block' && upTile.type === 'block') {
                 lastTile = tile;
-                if(this.isLadder()) {
-                    var distanceBetweenPrevLadder;
-                    if(randomTilesForLadder.length > 0) {
-                        //ensure the ladders cannot be so close
-                        distanceBetweenPrevLadder = tile.x - randomTilesForLadder[randomTilesForLadder.length - 1].x;
-                        if(distanceBetweenPrevLadder < FloorStores.tileWidth * 5) {
-                            console.log("ladders are too close:", tile);
-                            continue;
-                        }
+
+                if(floor.level === 6) {
+                    //put fixed ladder on the first tile on level 6 because of princess
+                    if(!this.isLevelSixFirstLadder) {
+                        randomTilesForLadder.push(tile);
+                        this.isLevelSixFirstLadder = true;
                     }
-                    randomTilesForLadder.push(tile);
+
+                    
+                }else {
+                    if(this.isLadder()) {
+                        var distanceBetweenPrevLadder;
+                        if(randomTilesForLadder.length > 0) {
+                            //ensure the ladders cannot be so close
+                            distanceBetweenPrevLadder = tile.x - randomTilesForLadder[randomTilesForLadder.length - 1].x;
+                            if(distanceBetweenPrevLadder < FloorStores.tileWidth * 5) {
+                                console.log("ladders are too close:", tile);
+                                continue;
+                            }
+                        }
+                        randomTilesForLadder.push(tile);
+                    }
                 }
             }
+
+
+            //---level 6 -----------fix ladder position
+            if(floor.level === 6 && j=== floor.floorMap.length - 1) {
+                randomTilesForLadder.push(lastTile);
+            }
+            //-------------------------------------------//
 
             //if no ladder is generated, add the last tile for ladder (at least one tile for each level)
             if(j=== floor.floorMap.length - 1 && randomTilesForLadder.length === 0) {

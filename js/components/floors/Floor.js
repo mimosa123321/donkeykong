@@ -15,7 +15,14 @@ Floor.prototype.init = function() {
     var i, floorProps = {};
 
     //the amount of tiles is the floor
-    this.noOfTiles = (this.level === 1)? Floor.MAX_TILES: this.tilesRandomizer();
+    if(this.level === 1) {
+        this.noOfTiles = Floor.MAX_TILES;
+    }else if(this.level === 7) {
+        this.noOfTiles = 8; //for princess
+    }else {
+        this.noOfTiles = this.tilesRandomizer();
+    }
+    // this.noOfTiles = (this.level === 1)? Floor.MAX_TILES: this.tilesRandomizer();
 
     //start positionX for laying the floor at the center
     // startPosX = (GameStores.sceneWidth - (this.noOfTiles * FloorStores.tileWidth)) * 0.5;
@@ -37,6 +44,11 @@ Floor.prototype.init = function() {
         var tilePosX = FloorStores.tileWidth * i,
             tilePosY = Floor.LEVELS[this.level - 1].posY,
             tileType = (this.isHole(i) === true && this.level !== 1)? 'hole':'block'; //level1 has no holes
+
+        if(this.level === 7) {
+            tileType = 'block';
+        }
+
         if(i < (Floor.MAX_TILES - this.noOfTiles) * 0.5 || i >= (Floor.MAX_TILES - ((Floor.MAX_TILES - this.noOfTiles) * 0.5))) {
             tileType = 'hole'; // hole are placed be
         }

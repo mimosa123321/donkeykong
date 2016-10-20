@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:555fe3d014f6e4206a3d5f66ec91367f:28799c59fc7f093bd695eae5da81e65c:f096af8f9f4ee2cbcef9bc317ff91bd8$ -->
+<TextureAtlas imagePath="animation.png">
+    <SubTexture name="1" x="2" y="2" width="69" height="48"/>
+    <SubTexture name="2" x="73" y="2" width="60" height="48"/>
+    <SubTexture name="3" x="135" y="2" width="69" height="48"/>
+    <SubTexture name="4" x="206" y="2" width="65" height="48"/>
+    <SubTexture name="5" x="273" y="2" width="60" height="48"/>
+    <SubTexture name="6" x="335" y="2" width="64" height="48"/>
+    <SubTexture name="7" x="401" y="2" width="60" height="48"/>
+    <SubTexture name="8" x="463" y="2" width="69" height="48"/>
+    <SubTexture name="9" x="534" y="2" width="71" height="48"/>
+</TextureAtlas>

@@ -1,4 +1,4 @@
-var floorsManager, player, ladders, bucketsManager;
+var floorsManager, player, ladders, bucketsManager, donkey, princess;
 function init() {
     initCanvas();
 }
@@ -20,6 +20,8 @@ function initCanvas() {
     initKeyBoard();
     setInterval(draw, 10);
     initBucket();
+    initDockey();
+    initPrincess();
 }
 
 function initFloor() {
@@ -38,6 +40,14 @@ function initBucket(){
     bucketsManager = new BucketsManager();
 }
 
+function initDockey(){
+    donkey = new Donkey();
+}
+
+function initPrincess() {
+    princess = new Princess();
+}
+
 function draw() {
     GameStores.getCanvasContext().clearRect(0,0,GameStores.sceneWidth, GameStores.sceneHeight);
     GameStores.getCanvasContext().beginPath();
@@ -46,6 +56,8 @@ function draw() {
 
     player.draw();
     bucketsManager.draw();
+    donkey.draw();
+    princess.draw();
 }
 
 function initKeyBoard() {

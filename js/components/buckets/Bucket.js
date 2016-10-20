@@ -19,12 +19,12 @@ Bucket.prototype.init = function() {
     this.bucketAnimation = new BucketAnimation();
 
     var _this = this;
-    var startPoint = this.setStartPoint();
+    // var startPoint = this.setStartPoint();
     // this.direction = (Math.ceil(Math.random()*2) === 1)? "left": "right";
-    this.direction = "right";
+    this.direction = DonkeyStores.throwDirection;
     this.pos = {
-        x: startPoint.x,
-        y: startPoint.y
+        x: DonkeyStores.pos.x,
+        y: DonkeyStores.pos.y
     };
 
 
@@ -121,8 +121,6 @@ Bucket.prototype.draw = function() {
         this.ctx.beginPath();
         this.ctx.drawImage(this.bucketImg, this.animPosX, this.animposY , this.animWidth, this.animHeight, this.pos.x, this.pos.y - this.animHeight, this.animWidth, this.animHeight - 1);
     }
-
-
     // this.ctx.arc(this.pos.x + this.radius ,this.pos.y - this.radius - 2,this.radius,0,Math.PI*2,true); // Outer circle
     // this.ctx.fillStyle = "#f4702c";
     // this.ctx.fill();

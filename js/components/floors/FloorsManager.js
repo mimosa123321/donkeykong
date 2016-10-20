@@ -8,9 +8,6 @@ FloorsManager.prototype.initFloor = function() {
         var floor = new Floor((i + 1));
         FloorStores.setFloorsMap(floor);
     }
-    console.log("-------------------------------");
-    console.log(FloorStores.getFloorsMap());
-    console.log("-------------------------------");
 };
 
 FloorsManager.prototype.draw = function() {

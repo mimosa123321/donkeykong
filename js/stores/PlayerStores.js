@@ -5,6 +5,7 @@ const PlayerStores = {
     jumpDistance: 40,
     currentLevel: 0,
     isDie: false,
+    isWin: false,
     spriteFrames: {
         stand:{
             'right':[{x:2,y:2,width:21,height:42}],
