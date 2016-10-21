@@ -109,6 +109,7 @@ Donkey.prototype.draw = function() {
     }
 
     if(PlayerStores.isDie) {
+        SoundManager.play(SoundManager.SOUND_DONKEY_WIN);
         this.animation.win();
     }
 

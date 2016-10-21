@@ -2,7 +2,12 @@ var floorsManager, player, ladders, bucketsManager, donkey, princess, enemiesMan
 function init() {
     this.isShowPanel = false;
 
-    initCanvas();
+
+    SoundManager.initialize(function() {
+        SoundManager.play(SoundManager.SOUND_INTRO);
+        initCanvas();
+    });
+
     /*UIElements.showPanel("intro");
 
      setTimeout(function() {

@@ -39,6 +39,8 @@ DonkeyAnimation.prototype.throw = function(direction) {
 
     if(this.noOfThrow  >= this.counter) {
         this.frameThrow += 1;
+        SoundManager.play(SoundManager.SOUND_THROW_BARREL);
+
         if(direction === 'left') {
             frames = DonkeyStores.spriteFrames.throw.left;
         }else {

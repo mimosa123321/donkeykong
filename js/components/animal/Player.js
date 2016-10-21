@@ -75,6 +75,7 @@ Player.prototype.collideHammer = function() {
     if(this.pos.x + PlayerStores.bodyWidth >= HammerStores.pos.x && this.pos.x <= HammerStores.pos.x + HammerStores.width && this.pos.y + PlayerStores.bodyHeight >= HammerStores.pos.y - HammerStores.height && this.pos.y <= HammerStores.pos.y) {
         console.log("get hammer");
         PlayerStores.getHammer = true;
+        SoundManager.play(SoundManager.SOUND_HAMMER);
         return;
     }
 };
