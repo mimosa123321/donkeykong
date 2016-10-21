@@ -51,6 +51,7 @@ AnimalBase.prototype.startJump = function() {
     this.destJumpY = this.startJumpY - this.jumpDistance;
     this.speed = 1;
     this.isJump = true;
+    SoundManager.play(SoundManager.SOUND_JUMP);
 };
 
 AnimalBase.prototype.jump = function() {

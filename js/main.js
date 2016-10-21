@@ -2,6 +2,7 @@ var floorsManager, player, ladders, bucketsManager, donkey, princess;
 function init() {
     this.isShowPanel = false;
 
+    SoundManager.play();
     UIElements.showPanel("intro");
 
     setTimeout(function() {
@@ -160,9 +161,11 @@ function initKeyBoard() {
         switch (event.keyCode) {
             case 37:
                 player.direction = 'left';
+                SoundManager.play(SoundManager.SOUND_WALK);
                 break;
             case 39:
                 player.direction = 'right';
+                SoundManager.play(SoundManager.SOUND_WALK);
                 break;
             case 32:
                 player.startJump();

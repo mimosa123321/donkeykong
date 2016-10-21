@@ -74,10 +74,12 @@ Player.prototype.collideEnemy = function() {
 
 Player.prototype.die = function() {
     PlayerStores.isDie = true;
+    SoundManager.play(SoundManager.SOUND_DIE);
 };
 
 Player.prototype.win = function() {
     PlayerStores.isWin = true;
+    SoundManager.play(SoundManager.SOUND_WIN);
 };
 
 Player.prototype.draw = function() {
