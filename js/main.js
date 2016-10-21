@@ -202,6 +202,9 @@ function initKeyBoard() {
                     player.climb("down");
                 }
                 break;
+            case 16:
+                player.beat();
+                break;
             default:
                 break;
         }

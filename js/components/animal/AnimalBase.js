@@ -8,7 +8,7 @@ AnimalBase.prototype.move = function(direction) {
     var posX = 0, posY = 0;
     switch (direction) {
         case 'left':
-            if(this.isJump || this.isClimb || this.isFall) {
+            if(this.isJump || this.isClimb || this.isFall || this.isBeat) {
                 return;
             };
             posX = this.pos.x - this.stepDistance;
@@ -22,7 +22,7 @@ AnimalBase.prototype.move = function(direction) {
             break;
 
         case 'right':
-            if(this.isJump || this.isClimb || this.isFall) {
+            if(this.isJump || this.isClimb || this.isFall || this.isBeat) {
                 return;
             };
             posX = this.pos.x + this.stepDistance;
@@ -44,7 +44,7 @@ AnimalBase.prototype.move = function(direction) {
 
 //---------------------jump-------------------------
 AnimalBase.prototype.startJump = function() {
-    if(this.isJump || this.isClimb || this.isFall) {
+    if(this.isJump || this.isClimb || this.isFall || this.isBeat) {
         return;
     }
     this.startJumpY = this.pos.y;
@@ -128,10 +128,15 @@ AnimalBase.prototype.climb = function(direction) {
     }
 
     for(i=0; i<ladders.length; i++) {
-        var ladder = ladders[i];
+        var ladder = ladders[i],
+            offset = 0;
+
+        if(PlayerStores.getHammer) {
+            offset = 15;
+        }
 
         //check collision with ladder
-        if(posX > ladder.x - 5  && centerX < ladder.x + FloorStores.ladderWidth) {
+        if(posX + offset> ladder.x   && centerX < ladder.x + FloorStores.ladderWidth) {
             this.isClimb = true; //start climb
             switch (direction) {
                 case "up":
@@ -154,7 +159,13 @@ AnimalBase.prototype.climb = function(direction) {
                     break;
             }
 
-            this.pos.x = posX;
+            // if(PlayerStores.getHammer && this.lastDirection === 'right' && direction === "down") {
+            //     this.pos.x = ladder.x;
+            // }else {
+            //     this.pos.x = ladder.x + 8;
+            // }
+
+            this.pos.x = ladder.x + 8;
             this.pos.y = posY;
             // this.store.setPositions(posX, posY);
         }
@@ -165,7 +176,8 @@ AnimalBase.prototype.collideFloor = function() {
     var i,
         posX = this.pos.x,
         currentLevel = this.store.currentLevel,
-        floor = FloorStores.getFloorsMap()[currentLevel].floorMap;
+        floor = FloorStores.getFloorsMap()[currentLevel].floorMap,
+        offset = (PlayerStores.getHammer && this.lastDirection === "right")? 15:0;
 
     if(currentLevel === 0) {
         return;
@@ -174,13 +186,16 @@ AnimalBase.prototype.collideFloor = function() {
         this.destFallY = FloorStores.getLevels()[currentLevel - 1].posY;
     }
 
+    // console.log(this.lastDirection);
+    // console.log(offset);
+
     for(i=0; i<floor.length; i++) {
         var tile = floor[i],
             tileType = tile.type,
             tileX = tile.x,
             tileWidth = FloorStores.tileWidth;
 
-        if(tileType === "hole" && posX + 10 > tileX && (posX + this.store.bodyWidth * 0.5 + 5) < tileX + tileWidth) { //if hole, fall
+        if(tileType === "hole" && posX + 10 + offset > tileX && (posX + this.store.bodyWidth * 0.5 + 5 + offset) < tileX + tileWidth) { //if hole, fall
             this.isFall = true;
         }
     }

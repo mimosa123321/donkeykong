@@ -6,6 +6,7 @@ var Player = function() {
     this.isJump = false;
     this.isClimb = false;
     this.isFall = false;
+    this.isBeat = false;
     this.lastDirection = 'right';
 
     AnimalBase.call(this, PlayerStores);
@@ -73,11 +74,18 @@ Player.prototype.collideEnemy = function() {
 
 Player.prototype.collideHammer = function() {
     if(this.pos.x + PlayerStores.bodyWidth >= HammerStores.pos.x && this.pos.x <= HammerStores.pos.x + HammerStores.width && this.pos.y + PlayerStores.bodyHeight >= HammerStores.pos.y - HammerStores.height && this.pos.y <= HammerStores.pos.y) {
-        console.log("get hammer");
         PlayerStores.getHammer = true;
         SoundManager.play(SoundManager.SOUND_HAMMER);
         return;
     }
+};
+
+Player.prototype.beat = function() {
+    console.log("beat");
+    if(!PlayerStores.getHammer) {
+        return;
+    }
+    this.isBeat = true;
 };
 
 
@@ -97,6 +105,7 @@ Player.prototype.draw = function() {
     var width;
     var height;
     var animation;
+    var offset = 0;
 
     if(!PlayerStores.isDie && !PlayerStores.isWin) {
         if(this.direction) {
@@ -106,7 +115,9 @@ Player.prototype.draw = function() {
                 SoundManager.play(SoundManager.SOUND_WALK);
             }
         }else {
-            animation = PlayerAnimation.stand(this.lastDirection);
+            if(!this.isBeat) {
+                animation = PlayerAnimation.stand(this.lastDirection);
+            }
         }
 
         if(this.isJump) {
@@ -127,6 +138,14 @@ Player.prototype.draw = function() {
             this.fall();
         }
 
+        if(this.isBeat) {
+            animation = PlayerAnimation.beat(this.lastDirection);
+            offset = 22;
+            if(animation.isFinish) {
+                this.isBeat = false;
+            }
+        }
+
         this.collideBucket();
         this.collideDockey();
         this.collidePrincess();
@@ -141,6 +160,7 @@ Player.prototype.draw = function() {
             this.store.currentLevel =  this.updateFloorLevel();
         }
     }
+
 
     if(PlayerStores.isDie) {
         // this.pos.y = FloorStores.getLevels()[this.store.currentLevel].posY - PlayerStores.bodyHeight;
@@ -157,13 +177,14 @@ Player.prototype.draw = function() {
         animation = PlayerAnimation.stand(this.lastDirection);
     }
 
+
     if(animation) {
         posX = animation.posX;
         posY = animation.posY;
         width = animation.width;
         height = animation.height;
 
-        GameStores.getCanvasContext().drawImage(this.player, posX, posY, width, height, this.pos.x, this.pos.y, width, height);
+        GameStores.getCanvasContext().drawImage(this.player, posX, posY, width, height, this.pos.x, this.pos.y - offset, width, height);
     }
 };
 
