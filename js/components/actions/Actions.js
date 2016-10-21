@@ -60,10 +60,15 @@ var Actions = {
         return {x:posX, y:posY, stop:stopFall};
     },
 
-    collideHole: function(x, y, width, height, currentLevel) {
+    collideHole: function(x, y, width, height, currentLevel, offset) {
         var i,
             posX = x,
             floor = FloorStores.getFloorsMap()[currentLevel].floorMap;
+
+
+        if(offset === null || offset === undefined) {
+            offset = 0;
+        }
 
         if(currentLevel === 0) {
             return;
@@ -75,7 +80,7 @@ var Actions = {
                 tileX = tile.x,
                 tileWidth = FloorStores.tileWidth;
 
-            if(tileType === "hole" && posX> tileX && posX + width < tileX + tileWidth) { //if hole, fall
+            if(tileType === "hole" && posX> tileX - offset && posX + width - offset < tileX + tileWidth) { //if hole, fall
                 return true;
             }else {
                 continue;

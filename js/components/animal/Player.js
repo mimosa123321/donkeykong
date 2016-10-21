@@ -62,6 +62,19 @@ Player.prototype.collidePrincess = function() {
     }
 };
 
+Player.prototype.collideEnemy = function() {
+    for(var i=0; i<EnemyStores.enemies.length; i++) {
+        var enemy = EnemyStores.enemies[i];
+        console.log("player:", this.pos.x + PlayerStores.bodyWidth);
+        console.log("enemy:", enemy.pos.x);
+        if(this.pos.x + PlayerStores.bodyWidth >= enemy.pos.x  && this.pos.x <= enemy.pos.x + EnemyStores.width && this.pos.y + PlayerStores.bodyHeight >= enemy.pos.y && this.pos.y <= enemy.pos.y + EnemyStores.height) {
+            this.die();
+            return;
+        }
+    }
+};
+
+
 Player.prototype.die = function() {
     PlayerStores.isDie = true;
 };
@@ -105,6 +118,7 @@ Player.prototype.draw = function() {
         this.collideBucket();
         this.collideDockey();
         this.collidePrincess();
+        this.collideEnemy();
 
         //update floor level when its state is not jump - have errors when update currentlevel when jump
         if(!this.isJump) {

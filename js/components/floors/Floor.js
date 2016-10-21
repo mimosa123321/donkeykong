@@ -23,23 +23,6 @@ Floor.prototype.init = function() {
     }else {
         this.noOfTiles = this.tilesRandomizer();
     }
-    // this.noOfTiles = (this.level === 1)? Floor.MAX_TILES: this.tilesRandomizer();
-
-    //start positionX for laying the floor at the center
-    // startPosX = (GameStores.sceneWidth - (this.noOfTiles * FloorStores.tileWidth)) * 0.5;
-
-    /*for(i=0; i<this.noOfTiles; i++) {
-        var tilePosX = FloorStores.tileWidth * i + startPosX,
-            tilePosY = Floor.LEVELS[this.level - 1].posY,
-            tileType = (this.isHole() === true && this.type !== 'ground')? 'hole':'block'; //ground floor has no holes
-
-        floorProps = {
-            type: tileType,
-            x: tilePosX,
-            y: tilePosY
-        };
-        this.floorMap.push(floorProps);
-    }*/
 
     for(i=0; i<Floor.MAX_TILES; i++) {
         var tilePosX = FloorStores.tileWidth * i,

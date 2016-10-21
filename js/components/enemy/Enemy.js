@@ -1,7 +1,7 @@
 var Enemy = function(type, currentLevel) {
-    this.currentLevel = 5;
-    this.speed = 1;
-    this.radius = 12;
+    this.currentLevel = currentLevel;
+    this.type = type;
+    this.speed = 0.5;
     this.ctx = GameStores.getCanvasContext();
     this.animation;
     this.animPosX;
@@ -14,49 +14,55 @@ var Enemy = function(type, currentLevel) {
 
 
 Enemy.prototype.init = function() {
-
     var _this = this;
     var startPoint = this.setStartPoint();
-    this.pos = {
-        x: startPoint.pos.x,
-        y: startPoint.pos.y
-    };
+    if(startPoint !== null) {
+        this.pos = {
+            x: startPoint.x,
+            y: startPoint.y
+        };
 
-    this.EnemyImg = new Image();
-    this.EnemyImg.onload = function() {
-        GameStores.getCanvasContext().drawImage(this, _this.pos.x, _this.pos.y , 0, 0);
-    };
-    this.EnemyImg.src = './images/enemy.png';
-    /*this.pos = {
-     x: startPoint.x,
-     y: 610
-     };*/
+        this.EnemyImg = new Image();
+        this.EnemyImg.onload = function() {
+            GameStores.getCanvasContext().drawImage(this, _this.pos.x, _this.pos.y , 0, 0);
+        };
+        this.EnemyImg.src = './images/enemy.png';
+
+
+        this.animation = new EnemyAnimation();
+        this.updateDirection();
+
+    }else {
+        this.init();
+    }
 };
+
 
 Enemy.prototype.setStartPoint = function() {
-    var topFloor  = FloorStores.getFloorsMap()[this.currentLevel].floorMap,
-        randomPosition = (Math.ceil(Math.random()*2) === 1)? "left": "right",
-        startX = 0,
-        destX = 0;
+    var randomPosition = (Math.ceil(Math.random()*2) === 1)? "left": "right",
+        topFloor  = FloorStores.getFloorsMap()[this.currentLevel].floorMap,
+        randomX = 0;
 
     if(randomPosition === "left") {
-        startX = 0;
-        destX = 8;
+        randomX = Math.ceil(Math.random()* (8 - 3)) + 3;
     }else {
-        startX = 11;
-        destX = 20;
+        randomX = Math.ceil(Math.random()* (18 - 11)) + 11;
     }
 
-    for(var i=startX; i<destX; i++) {
-        var tile = topFloor[i];
-        if(tile.type  === "block") {
-            return {x: tile.x, y: tile.y}
-        }
+    var tile = topFloor[randomX];
+    if(tile.type  === "block") {
+        console.log("not a hole x:", tile.x , 'y:', tile.y);
+        return {x:tile.x , y: tile.y};
+    }else {
+        console.log("Enemy is places on a hole");
+        return null;
     }
 };
 
+
+
 Enemy.prototype.move = function() {
-    var moving = Actions.move(this.pos.x, this.pos.y, this.radius * 2, this.radius * 2 , this.direction , this.speed, true);
+    var moving = Actions.move(this.pos.x, this.pos.y, EnemyStores.width, EnemyStores.height , this.direction , this.speed, false);
     this.pos.x = moving.x;
     this.pos.y = moving.y;
     this.isReset = moving.isReset;
@@ -67,29 +73,21 @@ Enemy.prototype.updateDirection = function() {
 };
 
 Enemy.prototype.collideHole = function() {
-    return Actions.collideHole(this.pos.x, this.pos.y, this.radius * 2, this.radius * 2, this.currentLevel);
+    return Actions.collideHole(this.pos.x, this.pos.y, EnemyStores.width, EnemyStores.height, this.currentLevel, EnemyStores.width);
 };
 
-Enemy.prototype.fall = function() {
-    var falling = Actions.fall(this.pos.x, this.pos.y, this.radius * 2, this.radius * 2 , this.currentLevel, 2);
-    this.pos.x = falling.x;
-    this.pos.y = falling.y;
-
-    if(falling.stop === true) {
-        this.updateDirection();
-        this.isFall = false;
-    }
-};
-
-Enemy.prototype.collideLadder = function() {
-    var offset = {
-        minX:4,
-        maxX:0
-    };
-    return Actions.collideLadder(this.pos.x, this.pos.y, this.radius * 2, this.radius * 2 , this.currentLevel, 'down', offset);
-};
 
 Enemy.prototype.draw = function() {
+    if(this.collideHole()) {
+        if(this.direction === "left") {
+            this.direction = "right";
+        }else {
+            this.direction = "left";
+        }
+    }
+ 
+    this.animation.walk(this.type, this.direction);
+    this.move();
 
     /*if(!PlayerStores.isDie && !PlayerStores.isWin) {
         if(this.collideHole()) {

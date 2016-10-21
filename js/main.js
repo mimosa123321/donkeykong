@@ -1,15 +1,16 @@
-var floorsManager, player, ladders, bucketsManager, donkey, princess;
+var floorsManager, player, ladders, bucketsManager, donkey, princess, enemiesManager;
 function init() {
     this.isShowPanel = false;
 
-    UIElements.showPanel("intro");
+    initCanvas();
+    /*UIElements.showPanel("intro");
 
     setTimeout(function() {
         initCanvas();
     }, 2000);
     setTimeout(function() {
         UIElements.hidePanel("intro");
-    }, 4000);
+    }, 4000);*/
 }
 
 function initCanvas() {
@@ -30,6 +31,7 @@ function initCanvas() {
     initKeyBoard();
     initBucket();
     initDockey();
+    initEnemy();
     initPrincess();
 
     setInterval(draw, 10);
@@ -59,6 +61,10 @@ function initPrincess() {
     princess = new Princess();
 }
 
+function initEnemy() {
+    enemiesManager = new EnemiesManager();;
+}
+
 function draw() {
     GameStores.getCanvasContext().clearRect(0,0,GameStores.sceneWidth, GameStores.sceneHeight);
     GameStores.getCanvasContext().beginPath();
@@ -69,6 +75,7 @@ function draw() {
     bucketsManager.draw();
     donkey.draw();
     princess.draw();
+    enemiesManager.draw();
 
 
     /*------------------die----------------------*/
