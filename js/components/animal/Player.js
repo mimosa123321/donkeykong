@@ -101,7 +101,9 @@ Player.prototype.draw = function() {
         if(this.direction) {
             animation = PlayerAnimation.walk(this.direction);
             this.move(this.direction);
-            SoundManager.play(SoundManager.SOUND_WALK);
+            if(!this.isJump) {
+                SoundManager.play(SoundManager.SOUND_WALK);
+            }
         }else {
             animation = PlayerAnimation.stand(this.lastDirection);
         }
@@ -113,6 +115,7 @@ Player.prototype.draw = function() {
 
         if(this.isClimb) {
             animation = PlayerAnimation.climb();
+            SoundManager.play(SoundManager.SOUND_CLIMB);
         }
 
         if(!this.isJump && !this.isClimb && !this.isFall) {

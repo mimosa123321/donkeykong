@@ -4,6 +4,7 @@ var SoundManager = {
     SOUND_WALK: 9,
     SOUND_DIE: 1,
     SOUND_WIN: 10,
+    SOUND_CLIMB: 12,
     context: new AudioContext(),
     currentSounds: [],
     initialize: function() {
@@ -25,7 +26,8 @@ var SoundManager = {
             'sounds/jumpbar.wav',       // 8
             'sounds/walking.wav',       // 9
             'sounds/win1.wav',          // 10
-            'sounds/win2.wav'           // 11
+            'sounds/win2.wav',          // 11
+            'sounds/climb.wav'          // 12
         ], onLoaded);
         loader.load();
     },
