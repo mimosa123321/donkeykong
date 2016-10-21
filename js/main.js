@@ -1,16 +1,15 @@
-var floorsManager, player, ladders, bucketsManager, donkey, princess, enemiesManager, hammer;
+var floorsManager, player, ladders, bucketsManager, donkey, princess;
 function init() {
     this.isShowPanel = false;
 
-    initCanvas();
-    /*UIElements.showPanel("intro");
+    UIElements.showPanel("intro");
 
     setTimeout(function() {
         initCanvas();
-    }, 2000);
+    }, 4000);
     setTimeout(function() {
         UIElements.hidePanel("intro");
-    }, 4000);*/
+    }, 6000);
 }
 
 function initCanvas() {
@@ -31,9 +30,7 @@ function initCanvas() {
     initKeyBoard();
     initBucket();
     initDockey();
-    initEnemy();
     initPrincess();
-    initHammer();
 
     setInterval(draw, 10);
 }
@@ -62,14 +59,6 @@ function initPrincess() {
     princess = new Princess();
 }
 
-function initEnemy() {
-    enemiesManager = new EnemiesManager();
-}
-
-function initHammer() {
-    hammer = new Hammer();
-}
-
 function draw() {
     GameStores.getCanvasContext().clearRect(0,0,GameStores.sceneWidth, GameStores.sceneHeight);
     GameStores.getCanvasContext().beginPath();
@@ -80,8 +69,6 @@ function draw() {
     bucketsManager.draw();
     donkey.draw();
     princess.draw();
-    enemiesManager.draw();
-    hammer.draw();
 
 
     /*------------------die----------------------*/
@@ -147,7 +134,6 @@ function goNextLevel() {
 function resetLevel() {
     player.reset();
     bucketsManager.reset();
-    enemiesManager.reset();
     donkey.reset();
 
     PlayerStores.isDie = false;
@@ -160,7 +146,6 @@ function newLevel() {
 
     player.reset();
     bucketsManager.reset();
-    enemiesManager.reset();
     donkey.reset();
     donkey.init();
 
