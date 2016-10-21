@@ -3,6 +3,10 @@ var UIElements = {
         var panel = document.getElementById('panel');
         panel.className = "show";
         switch(type){
+            case "intro":
+                this.intro();
+                break;
+
             case "die":
                 this.loseLife();
                 break;
@@ -33,6 +37,16 @@ var UIElements = {
         setTimeout(function() {
             _this.hideContents();
         },2000);
+    },
+
+    intro: function() {
+        var el = document.getElementById("intro");
+        el.className = "show";
+    },
+
+    hideIntro: function() {
+        var el = document.getElementById("intro");
+        el.className = "";
     },
 
     loseLife: function() {

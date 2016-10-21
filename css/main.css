@@ -6,7 +6,6 @@ html, body {
     background-color: #232323;
     font-family: Arial, Helvetica;
     font-weight: 100;
-
 }
 
 #wrapper {
@@ -34,6 +33,30 @@ html, body {
     transition: transform 0.8s ease-out;
     transform: translate3d(0, 0,0);
 }
+
+#wrapper #panel #intro {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    text-align: center;
+}
+    #wrapper #panel #intro .intro-logo {
+        display: block;
+        margin: 100px auto 100px auto;
+    }
+    #wrapper #panel #intro .intro-donkey {
+        display: block;
+        margin: 100px auto 100px auto;
+    }
+    #wrapper #panel #intro .intro-copyright {
+        display: block;
+        margin: 0 auto 0 auto;
+    }
+    #wrapper #panel #intro.show {
+        display: block;
+    }
 
 #wrapper #panel #die {
     display: none;

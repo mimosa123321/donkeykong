@@ -1,7 +1,15 @@
 var floorsManager, player, ladders, bucketsManager, donkey, princess;
 function init() {
     this.isShowPanel = false;
-    initCanvas();
+
+    UIElements.showPanel("intro");
+
+    setTimeout(function() {
+        initCanvas();
+    }, 2000);
+    setTimeout(function() {
+        UIElements.hidePanel("intro");
+    }, 4000);
 }
 
 function initCanvas() {
@@ -14,6 +22,7 @@ function initCanvas() {
     }else {
         return;
     }
+
 
     initFloor();
     initLadder();
