@@ -6,6 +6,7 @@ var SoundManager = {
     SOUND_WIN: 4,
     SOUND_CLIMB: 8,
     SOUND_HAMMER: 2,
+    SOUND_HAMMER_PUNCH: 0,
     SOUND_THROW_BARREL: 3,
     SOUND_DONKEY_WIN: 6,
     context: new AudioContext(),
@@ -18,7 +19,7 @@ var SoundManager = {
         }
 
         var loader = new BufferLoader(SoundManager.context, [
-            'sounds/bacmusic.wav',      // 0
+            'sounds/hammer_punch.wav',  // 0
             'sounds/death.mp3',         // 1
             'sounds/hammer.wav',        // 2
             'sounds/throwbarrel.mp3',   // 3
@@ -35,7 +36,6 @@ var SoundManager = {
         var i = 0;
         for(i; i < SoundManager.currentSounds.length; i++) {
             if(SoundManager.currentSounds[i].soundIndex === soundIndex) {
-                console.log('deleting sound...');
                 SoundManager.currentSounds.splice(i, 1);
                 break;
             }

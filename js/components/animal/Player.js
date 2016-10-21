@@ -86,6 +86,7 @@ Player.prototype.beat = function() {
         return;
     }
     this.isBeat = true;
+    SoundManager.play(SoundManager.SOUND_HAMMER_PUNCH);
 };
 
 
