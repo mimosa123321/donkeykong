@@ -12,9 +12,19 @@ const PlayerAnimation = {
         if(this.noOfWalk  >= this.counterWalk) {
             this.frameWalk += 1;
             if(direction === 'left') {
-                frames = PlayerStores.spriteFrames.walk.left;
+                if(PlayerStores.getHammer) {
+                    frames = PlayerStores.spriteFrames.hammerMode.walk.left;
+                }else {
+                    frames = PlayerStores.spriteFrames.normal.walk.left;
+                }
+
             }else if(direction === 'right') {
-                frames = PlayerStores.spriteFrames.walk.right;
+                if(PlayerStores.getHammer) {
+                    frames = PlayerStores.spriteFrames.hammerMode.walk.right;
+                }else {
+                    frames = PlayerStores.spriteFrames.normal.walk.right;
+                }
+
             }
 
             if(this.frameWalk  >= frames.length) {
@@ -32,9 +42,17 @@ const PlayerAnimation = {
     stand:function(direction) {
         var frames = [];
         if(direction === 'left') {
-            frames = PlayerStores.spriteFrames.stand.left;
+            if(PlayerStores.getHammer) {
+                frames = PlayerStores.spriteFrames.hammerMode.stand.left;
+            }else {
+                frames = PlayerStores.spriteFrames.normal.stand.left;
+            }
         }else {
-            frames = PlayerStores.spriteFrames.stand.right;
+            if(PlayerStores.getHammer) {
+                frames = PlayerStores.spriteFrames.hammerMode.stand.right;
+            }else {
+                frames = PlayerStores.spriteFrames.normal.stand.right;
+            }
         }
         this.posX = frames[0].x;
         this.posY = frames[0].y;
@@ -45,7 +63,7 @@ const PlayerAnimation = {
     },
 
     climb: function() {
-        var frames = PlayerStores.spriteFrames.climb;
+        var frames = PlayerStores.spriteFrames.normal.climb;
         this.posX = frames[0].x;
         this.posY = frames[0].y;
         this.width = frames[0].width;
@@ -57,9 +75,17 @@ const PlayerAnimation = {
     jump: function(direction) {
         var frames = [];
         if(direction === 'left') {
-            frames = PlayerStores.spriteFrames.jump.left;
+            if(PlayerStores.getHammer) {
+                frames = PlayerStores.spriteFrames.hammerMode.jump.left;
+            }else {
+                frames = PlayerStores.spriteFrames.normal.jump.left;
+            }
         }else {
-            frames = PlayerStores.spriteFrames.jump.right;
+            if(PlayerStores.getHammer) {
+                frames = PlayerStores.spriteFrames.hammerMode.jump.right;
+            }else {
+                frames = PlayerStores.spriteFrames.normal.jump.right;
+            }
         }
         this.posX = frames[0].x;
         this.posY = frames[0].y;
@@ -72,9 +98,9 @@ const PlayerAnimation = {
     die: function(direction) {
         var frames = [];
         if(direction === 'left') {
-            frames = PlayerStores.spriteFrames.die.left;
+            frames = PlayerStores.spriteFrames.normal.die.left;
         }else {
-            frames = PlayerStores.spriteFrames.die.right;
+            frames = PlayerStores.spriteFrames.normal.die.right;
         }
         this.posX = frames[0].x;
         this.posY = frames[0].y;
