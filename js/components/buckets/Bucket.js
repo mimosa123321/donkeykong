@@ -16,14 +16,14 @@ var Bucket = function() {
 
 
 Bucket.prototype.init = function() {
-    this.bucketAnimation = new BucketAnimation();
-
-    var _this = this;
-    // var startPoint = this.setStartPoint();
-    // this.direction = (Math.ceil(Math.random()*2) === 1)? "left": "right";
+    var _this = this,
+        offset = 0;
     this.direction = DonkeyStores.throwDirection;
+    if(this.direction === "right") {
+        offset = 20;
+    }
     this.pos = {
-        x: DonkeyStores.pos.x,
+        x: DonkeyStores.pos.x + offset,
         y: DonkeyStores.pos.y
     };
 
@@ -34,10 +34,7 @@ Bucket.prototype.init = function() {
     };
     this.bucketImg.src = './images/barrelss.png';
 
-    /*this.pos = {
-     x: startPoint.x,
-     y: 610
-     };*/
+    this.bucketAnimation = new BucketAnimation();
 };
 
 Bucket.prototype.setStartPoint = function() {
@@ -121,10 +118,6 @@ Bucket.prototype.draw = function() {
         this.ctx.beginPath();
         this.ctx.drawImage(this.bucketImg, this.animPosX, this.animposY , this.animWidth, this.animHeight, this.pos.x, this.pos.y - this.animHeight, this.animWidth, this.animHeight - 1);
     }
-    // this.ctx.arc(this.pos.x + this.radius ,this.pos.y - this.radius - 2,this.radius,0,Math.PI*2,true); // Outer circle
-    // this.ctx.fillStyle = "#f4702c";
-    // this.ctx.fill();
-
 };
 
 Bucket.prototype.updateFloorLevel = function() {

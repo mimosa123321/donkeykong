@@ -1,7 +1,5 @@
 var EnemiesManager = function() {
-    this.noOfEnemies = 0;
-    this.maxEnemies= 1;
-
+    this.maxEnemies= 5;
     this.initBucket();
 };
 
@@ -28,7 +26,9 @@ EnemiesManager.prototype.draw = function() {
 };
 
 EnemiesManager.prototype.reset = function() {
+    EnemyStores.enemies = [];
 
+    this.initBucket();
 };
 
 

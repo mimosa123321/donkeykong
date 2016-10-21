@@ -1,4 +1,4 @@
-var floorsManager, player, ladders, bucketsManager, donkey, princess, enemiesManager;
+var floorsManager, player, ladders, bucketsManager, donkey, princess, enemiesManager, hammer;
 function init() {
     this.isShowPanel = false;
 
@@ -33,6 +33,7 @@ function initCanvas() {
     initDockey();
     initEnemy();
     initPrincess();
+    initHammer();
 
     setInterval(draw, 10);
 }
@@ -62,7 +63,11 @@ function initPrincess() {
 }
 
 function initEnemy() {
-    enemiesManager = new EnemiesManager();;
+    enemiesManager = new EnemiesManager();
+}
+
+function initHammer() {
+    hammer = new Hammer();
 }
 
 function draw() {
@@ -76,6 +81,7 @@ function draw() {
     donkey.draw();
     princess.draw();
     enemiesManager.draw();
+    hammer.draw();
 
 
     /*------------------die----------------------*/
@@ -141,6 +147,7 @@ function goNextLevel() {
 function resetLevel() {
     player.reset();
     bucketsManager.reset();
+    enemiesManager.reset();
     donkey.reset();
 
     PlayerStores.isDie = false;
@@ -153,6 +160,7 @@ function newLevel() {
 
     player.reset();
     bucketsManager.reset();
+    enemiesManager.reset();
     donkey.reset();
     donkey.init();
 

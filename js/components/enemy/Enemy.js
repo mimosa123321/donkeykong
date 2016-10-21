@@ -50,7 +50,9 @@ Enemy.prototype.setStartPoint = function() {
     }
 
     var tile = topFloor[randomX];
-    if(tile.type  === "block") {
+    var nextTile = topFloor[randomX + 1];
+    //make sure the tile and nextTile are block before put enemy
+    if(tile.type  === "block" && nextTile.type === "block") {
         console.log("not a hole x:", tile.x , 'y:', tile.y);
         return {x:tile.x , y: tile.y};
     }else {
@@ -78,42 +80,26 @@ Enemy.prototype.collideHole = function() {
 
 
 Enemy.prototype.draw = function() {
-    if(this.collideHole()) {
-        if(this.direction === "left") {
-            this.direction = "right";
-        }else {
-            this.direction = "left";
-        }
-    }
- 
-    this.animation.walk(this.type, this.direction);
-    this.move();
 
-    /*if(!PlayerStores.isDie && !PlayerStores.isWin) {
-        if(this.collideHole()) {
-            this.isFall = true;
-        }
-
-        if(this.collideLadder()) {
-            if(this.isAllowClimb) {
-                this.isFall = (Math.ceil(Math.random()*2) === 1)? true: false;
+    if(!PlayerStores.isDie && !PlayerStores.isWin) {
+        if (this.collideHole()) {
+            if (this.direction === "left") {
+                this.direction = "right";
+            } else {
+                this.direction = "left";
             }
         }
 
-        if(!this.isFall) {
-            this.move();
-            this.animation = this.bucketAnimation.rotate();
-            this.isAllowClimb = true;
-        }else {
-            this.fall();
-            this.animation = this.bucketAnimation.fall();
-            this.isAllowClimb = false;
+        if(this.pos.x <= 0) {
+            this.direction = "right";
         }
 
-        if(!this.isFall) {
-            var updateLevel = this.updateFloorLevel();
-            this.currentLevel = updateLevel;
+        if(this.pos.x >= GameStores.sceneWidth - EnemyStores.width) {
+            this.direction = "left";
         }
+
+        this.animation.walk(this.type, this.direction);
+        this.move();
     }
 
     if(this.animation) {
@@ -122,48 +108,8 @@ Enemy.prototype.draw = function() {
         this.animWidth = this.animation.width;
         this.animHeight = this.animation.height;
         this.ctx.beginPath();
-        this.ctx.drawImage(this.bucketImg, this.animPosX, this.animposY , this.animWidth, this.animHeight, this.pos.x, this.pos.y - this.animHeight, this.animWidth, this.animHeight - 1);
-    }*/
-    this.animPosX = this.animation.posX;
-    this.animposY = this.animation.posY;
-    this.animWidth = this.animation.width;
-    this.animHeight = this.animation.height;
-    this.ctx.beginPath();
-    this.ctx.drawImage(this.EnemyImg, this.animPosX, this.animposY , this.animWidth, this.animHeight, this.pos.x, this.pos.y - this.animHeight, this.animWidth, this.animHeight - 1);
-
-};
-
-Enemy.prototype.updateFloorLevel = function() {
-    var i,
-        posY = this.pos.y,
-        levels = FloorStores.getLevels();
-
-    for (i = 0; i < levels.length; i++) {
-        var levelPosY = levels[i].posY;
-        var nextLevelPosY;
-
-        if (i === 0) {
-            if (posY > levelPosY) {
-                return i;
-            }
-        }
-
-        if (i < levels.length - 1) {
-            nextLevelPosY = levels[i + 1].posY;
-            if (posY <= levelPosY && posY > nextLevelPosY) {
-                return i;
-            }
-        } else {
-            return levels.length - 1;
-        }
+        this.ctx.drawImage(this.EnemyImg, this.animPosX, this.animposY , this.animWidth, this.animHeight, this.pos.x, this.pos.y - this.animHeight, this.animWidth, this.animHeight - 1);
     }
 };
 
-Enemy.prototype.reset = function() {
-    this.currentLevel = 5;
-    this.isFall = false;
-    this.isAllowClimb = false;
-
-    this.init();
-};
 

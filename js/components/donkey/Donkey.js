@@ -57,14 +57,9 @@ Donkey.prototype.setStartPoint = function() {
                 if(tile.x != ladder.x && nextTile.x != ladder.x) {
                     return {x: tile.x, y: tile.y}
                 }
-
             }
-
-
         }
     }
-
-
 };
 
 Donkey.prototype.draw = function() {

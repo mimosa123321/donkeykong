@@ -40,7 +40,6 @@ Player.prototype.init = function() {
 Player.prototype.collideBucket = function() {
     for(var i=0; i<BucketStores.buckets.length; i++) {
         var bucket = BucketStores.buckets[i];
-
         if(this.pos.x + PlayerStores.bodyWidth - 4 >= bucket.pos.x + 7 && this.pos.x <= bucket.pos.x + bucket.radius  && this.pos.y + PlayerStores.bodyHeight >= bucket.pos.y - bucket.radius  && this.pos.y <= bucket.pos.y) {
             this.die();
             return;
@@ -65,9 +64,7 @@ Player.prototype.collidePrincess = function() {
 Player.prototype.collideEnemy = function() {
     for(var i=0; i<EnemyStores.enemies.length; i++) {
         var enemy = EnemyStores.enemies[i];
-        console.log("player:", this.pos.x + PlayerStores.bodyWidth);
-        console.log("enemy:", enemy.pos.x);
-        if(this.pos.x + PlayerStores.bodyWidth >= enemy.pos.x  && this.pos.x <= enemy.pos.x + EnemyStores.width && this.pos.y + PlayerStores.bodyHeight >= enemy.pos.y && this.pos.y <= enemy.pos.y + EnemyStores.height) {
+        if(this.pos.x + PlayerStores.bodyWidth >= enemy.pos.x  && this.pos.x <= enemy.pos.x + EnemyStores.width && this.pos.y + PlayerStores.bodyHeight >= enemy.pos.y - EnemyStores.height && this.pos.y <= enemy.pos.y) {
             this.die();
             return;
         }

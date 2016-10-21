@@ -1,6 +1,6 @@
 var EnemyStores = {
-    width: 22,
-    height: 24,
+    width: 14,
+    height: 10,
     enemies: [],
     spriteFrames: {
         fire: {
