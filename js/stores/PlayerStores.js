@@ -7,6 +7,7 @@ const PlayerStores = {
     isDie: false,
     isWin: false,
     totalLife : 3,
+    getHammer: false,
     spriteFrames: {
         stand:{
             'right':[{x:2,y:2,width:21,height:42}],

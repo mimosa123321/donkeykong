@@ -1,5 +1,9 @@
 const HammerStores = {
-    width: 29,
-    height: 35
+    width: 19,
+    height: 24,
+    pos: {
+        x:0,
+        y:0
+    }
 };
 

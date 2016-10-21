@@ -71,6 +71,14 @@ Player.prototype.collideEnemy = function() {
     }
 };
 
+Player.prototype.collideHammer = function() {
+    if(this.pos.x + PlayerStores.bodyWidth >= HammerStores.pos.x && this.pos.x <= HammerStores.pos.x + HammerStores.width && this.pos.y + PlayerStores.bodyHeight >= HammerStores.pos.y - HammerStores.height && this.pos.y <= HammerStores.pos.y) {
+        console.log("get hammer");
+        PlayerStores.getHammer = true;
+        return;
+    }
+};
+
 
 Player.prototype.die = function() {
     PlayerStores.isDie = true;
@@ -118,6 +126,10 @@ Player.prototype.draw = function() {
         this.collideDockey();
         this.collidePrincess();
         this.collideEnemy();
+
+        if(!PlayerStores.getHammer) {
+            this.collideHammer();
+        }
 
         //update floor level when its state is not jump - have errors when update currentlevel when jump
         if(!this.isJump) {

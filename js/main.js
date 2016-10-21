@@ -137,8 +137,7 @@ function resetLevel() {
     bucketsManager.reset();
     donkey.reset();
 
-    PlayerStores.isDie = false;
-    PlayerStores.isWin = false;
+    resetStores();
 }
 
 function newLevel() {
@@ -149,11 +148,16 @@ function newLevel() {
     bucketsManager.reset();
     donkey.reset();
     donkey.init();
+    hammer.reset();
 
+    resetStores();
+}
+
+function resetStores() {
+    PlayerStores.getHammer = false;
     PlayerStores.isDie = false;
     PlayerStores.isWin = false;
 }
-
 
 
 function initKeyBoard() {
