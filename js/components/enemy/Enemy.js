@@ -28,7 +28,6 @@ Enemy.prototype.init = function() {
         };
         this.EnemyImg.src = './images/enemy.png';
 
-
         this.animation = new EnemyAnimation();
         this.updateDirection();
 
@@ -44,9 +43,17 @@ Enemy.prototype.setStartPoint = function() {
         randomX = 0;
 
     if(randomPosition === "left") {
-        randomX = Math.ceil(Math.random()* (8 - 3)) + 3;
+        if(this.currentLevel === 0) {
+            randomX = Math.ceil(Math.random()* (5 - 2)) + 2;
+        }else {
+            randomX = Math.ceil(Math.random()* (8 - 3)) + 3;
+        }
     }else {
-        randomX = Math.ceil(Math.random()* (18 - 11)) + 11;
+        if(this.currentLevel === 0) {
+            randomX = Math.ceil(Math.random()* (18 - 14)) + 14;
+        }else {
+            randomX = Math.ceil(Math.random()* (18 - 11)) + 11;
+        }
     }
 
     var tile = topFloor[randomX];

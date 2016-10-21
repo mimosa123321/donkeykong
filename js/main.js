@@ -203,7 +203,9 @@ function initKeyBoard() {
                 }
                 break;
             case 16:
-                player.beat();
+                if(!player.isJump) {
+                    player.beat();
+                }
                 break;
             default:
                 break;

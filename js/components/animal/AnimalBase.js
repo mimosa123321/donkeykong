@@ -159,15 +159,8 @@ AnimalBase.prototype.climb = function(direction) {
                     break;
             }
 
-            // if(PlayerStores.getHammer && this.lastDirection === 'right' && direction === "down") {
-            //     this.pos.x = ladder.x;
-            // }else {
-            //     this.pos.x = ladder.x + 8;
-            // }
-
             this.pos.x = ladder.x + 8;
             this.pos.y = posY;
-            // this.store.setPositions(posX, posY);
         }
     }
 };
