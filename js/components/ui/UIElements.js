@@ -97,6 +97,7 @@ var UIElements = {
         this.hideLoseLife();
         this.hideGoNextLevel();
         this.hideWin();
+        this.hideIntro();
     },
 
     updateLifes: function() {
