@@ -52,7 +52,6 @@ Hammer.prototype.draw = function() {
         this.ctx.beginPath();
         this.ctx.drawImage(this.hammerImg, 0, 0 , this.animWidth, this.animHeight, this.pos.x, this.pos.y - this.animHeight, this.animWidth, this.animHeight);
     }
-
 };
 
 
