@@ -42,7 +42,7 @@ Player.prototype.collideBucket = function() {
     for(var i=0; i<BucketStores.buckets.length; i++) {
         var bucket = BucketStores.buckets[i];
         if(this.pos.x + PlayerStores.bodyWidth - 4 >= bucket.pos.x + 7 && this.pos.x <= bucket.pos.x + bucket.radius  && this.pos.y + PlayerStores.bodyHeight >= bucket.pos.y - bucket.radius  && this.pos.y <= bucket.pos.y) {
-            // this.die();
+            this.die();
             return;
         }
     }
@@ -50,7 +50,7 @@ Player.prototype.collideBucket = function() {
 
 Player.prototype.collideDockey = function() {
     if(this.pos.x + PlayerStores.bodyWidth >= DonkeyStores.pos.x && this.pos.x <= DonkeyStores.pos.x + DonkeyStores.width && this.store.currentLevel === 5) {
-        // this.die();
+        this.die();
         return;
     }
 };
@@ -66,7 +66,7 @@ Player.prototype.collideEnemy = function() {
     for(var i=0; i<EnemyStores.enemies.length; i++) {
         var enemy = EnemyStores.enemies[i];
         if(this.pos.x + PlayerStores.bodyWidth >= enemy.pos.x  && this.pos.x <= enemy.pos.x + EnemyStores.width && this.pos.y + PlayerStores.bodyHeight >= enemy.pos.y - EnemyStores.height && this.pos.y <= enemy.pos.y) {
-            // this.die();
+            this.die();
             return;
         }
     }
