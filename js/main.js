@@ -1,16 +1,16 @@
-var floorsManager, player, ladders, bucketsManager, donkey, princess;
+var floorsManager, player, ladders, bucketsManager, donkey, princess, enemiesManager, hammer;
 function init() {
     this.isShowPanel = false;
 
-    SoundManager.play();
-    UIElements.showPanel("intro");
+    initCanvas();
+    /*UIElements.showPanel("intro");
 
-    setTimeout(function() {
-        initCanvas();
-    }, 4000);
-    setTimeout(function() {
-        UIElements.hidePanel("intro");
-    }, 6000);
+     setTimeout(function() {
+     initCanvas();
+     }, 2000);
+     setTimeout(function() {
+     UIElements.hidePanel("intro");
+     }, 4000);*/
 }
 
 function initCanvas() {
@@ -31,7 +31,9 @@ function initCanvas() {
     initKeyBoard();
     initBucket();
     initDockey();
+    initEnemy();
     initPrincess();
+    initHammer();
 
     setInterval(draw, 10);
 }
@@ -60,6 +62,14 @@ function initPrincess() {
     princess = new Princess();
 }
 
+function initEnemy() {
+    enemiesManager = new EnemiesManager();
+}
+
+function initHammer() {
+    hammer = new Hammer();
+}
+
 function draw() {
     GameStores.getCanvasContext().clearRect(0,0,GameStores.sceneWidth, GameStores.sceneHeight);
     GameStores.getCanvasContext().beginPath();
@@ -70,6 +80,8 @@ function draw() {
     bucketsManager.draw();
     donkey.draw();
     princess.draw();
+    enemiesManager.draw();
+    hammer.draw();
 
 
     /*------------------die----------------------*/
@@ -135,6 +147,7 @@ function goNextLevel() {
 function resetLevel() {
     player.reset();
     bucketsManager.reset();
+    enemiesManager.reset();
     donkey.reset();
 
     resetStores();
@@ -146,6 +159,7 @@ function newLevel() {
 
     player.reset();
     bucketsManager.reset();
+    enemiesManager.reset();
     donkey.reset();
     donkey.init();
     hammer.reset();
@@ -160,16 +174,15 @@ function resetStores() {
 }
 
 
+
 function initKeyBoard() {
     document.addEventListener('keydown', function(event){
         switch (event.keyCode) {
             case 37:
                 player.direction = 'left';
-                SoundManager.play(SoundManager.SOUND_WALK);
                 break;
             case 39:
                 player.direction = 'right';
-                SoundManager.play(SoundManager.SOUND_WALK);
                 break;
             case 32:
                 player.startJump();

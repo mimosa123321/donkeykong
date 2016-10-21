@@ -101,6 +101,7 @@ Player.prototype.draw = function() {
         if(this.direction) {
             animation = PlayerAnimation.walk(this.direction);
             this.move(this.direction);
+            SoundManager.play(SoundManager.SOUND_WALK);
         }else {
             animation = PlayerAnimation.stand(this.lastDirection);
         }
