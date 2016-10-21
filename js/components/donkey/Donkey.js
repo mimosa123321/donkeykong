@@ -14,6 +14,7 @@ var Donkey = function() {
     this.throwAnimTimer = 100;
 
     this.throwDirection = null;
+    this.didPlayThrowSound = false;
 
     this.init();
 };
@@ -90,6 +91,10 @@ Donkey.prototype.draw = function() {
 
                 DonkeyStores.isThrow = true;
                 this.animation.throw(this.throwDirection);
+                if(!this.didPlayThrowSound) {
+                    this.didPlayThrowSound = true;
+                    SoundManager.play(SoundManager.SOUND_THROW_BARREL);
+                }
             }
         }
 
@@ -100,6 +105,7 @@ Donkey.prototype.draw = function() {
                 this.currentThrowAnimTimer = 0;
                 this.currentThrowTimer = 0;
                 this.throwDirection = null;
+                this.didPlayThrowSound = false;
             }
         }
 
