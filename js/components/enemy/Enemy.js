@@ -9,12 +9,14 @@ var Enemy = function(type, currentLevel) {
     this.animWidth;
     this.animHeight;
     this.animation;
+    this.isAlive;
     this.init();
 };
 
 
 Enemy.prototype.init = function() {
     var _this = this;
+    this.isAlive = true;
     var startPoint = this.setStartPoint();
     if(startPoint !== null) {
         this.pos = {

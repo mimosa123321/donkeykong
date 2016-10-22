@@ -21,7 +21,10 @@ EnemiesManager.prototype.draw = function() {
     var i, enemies = EnemyStores.enemies;
     for(i=0; i<enemies.length; i++) {
         var enemy = enemies[i];
-        enemy.draw();
+        if(enemy.isAlive) {
+            enemy.draw();
+        }
+
     }
 };
 

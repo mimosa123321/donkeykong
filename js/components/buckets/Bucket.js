@@ -11,6 +11,7 @@ var Bucket = function() {
     this.animWidth;
     this.animHeight;
     this.animation;
+    this.isAlive;
     this.init();
 };
 
@@ -18,6 +19,7 @@ var Bucket = function() {
 Bucket.prototype.init = function() {
     var _this = this,
         offset = 0;
+    this.isAlive = true;
     this.direction = DonkeyStores.throwDirection;
     if(this.direction === "right") {
         offset = 20;

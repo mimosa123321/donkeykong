@@ -30,7 +30,10 @@ BucketsManager.prototype.draw = function() {
     var i, buckets = BucketStores.buckets;
     for(i=0; i<buckets.length; i++) {
         var bucket = buckets[i];
-        bucket.draw();
+        if(bucket.isAlive) { //not draw when player beat the bucket
+            bucket.draw();
+        }
+
     }
 };
 

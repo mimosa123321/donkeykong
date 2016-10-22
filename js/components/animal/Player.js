@@ -41,9 +41,11 @@ Player.prototype.init = function() {
 Player.prototype.collideBucket = function() {
     for(var i=0; i<BucketStores.buckets.length; i++) {
         var bucket = BucketStores.buckets[i];
-        if(this.pos.x + PlayerStores.bodyWidth - 4 >= bucket.pos.x + 7 && this.pos.x <= bucket.pos.x + bucket.radius  && this.pos.y + PlayerStores.bodyHeight >= bucket.pos.y - bucket.radius  && this.pos.y <= bucket.pos.y) {
-            this.die();
-            return;
+        if(bucket.isAlive) {
+            if (this.pos.x + PlayerStores.bodyWidth - 4 >= bucket.pos.x + 7 && this.pos.x <= bucket.pos.x + bucket.radius && this.pos.y + PlayerStores.bodyHeight >= bucket.pos.y - bucket.radius && this.pos.y <= bucket.pos.y) {
+                this.die();
+                return;
+            }
         }
     }
 };
@@ -65,9 +67,11 @@ Player.prototype.collidePrincess = function() {
 Player.prototype.collideEnemy = function() {
     for(var i=0; i<EnemyStores.enemies.length; i++) {
         var enemy = EnemyStores.enemies[i];
-        if(this.pos.x + PlayerStores.bodyWidth >= enemy.pos.x  && this.pos.x <= enemy.pos.x + EnemyStores.width && this.pos.y + PlayerStores.bodyHeight >= enemy.pos.y - EnemyStores.height && this.pos.y <= enemy.pos.y) {
-            this.die();
-            return;
+        if(enemy.isAlive) {
+            if(this.pos.x + PlayerStores.bodyWidth >= enemy.pos.x  && this.pos.x <= enemy.pos.x + EnemyStores.width && this.pos.y + PlayerStores.bodyHeight >= enemy.pos.y - EnemyStores.height && this.pos.y <= enemy.pos.y) {
+                this.die();
+                return;
+            }
         }
     }
 };
@@ -80,9 +84,49 @@ Player.prototype.collideHammer = function() {
     }
 };
 
+
+Player.prototype.beatEnemies = function() {
+    for(var i=0; i<EnemyStores.enemies.length; i++) {
+        var enemy = EnemyStores.enemies[i];
+        if(this.lastDirection === "left") {
+            if(enemy.pos.x + EnemyStores.width > this.pos.x - 15  && enemy.pos.x + EnemyStores.width < this.pos.x && this.pos.y + PlayerStores.bodyHeight >= enemy.pos.y - EnemyStores.height && this.pos.y <= enemy.pos.y) {
+                enemy.isAlive = false;
+                return;
+            }
+        }
+
+        if(this.lastDirection === "right") {
+            if(enemy.pos.x > this.pos.x + PlayerStores.bodyWidth + 15 &&  enemy.pos.x + EnemyStores.width < this.pos.x + PlayerStores.bodyWidth + 50 && this.pos.y + PlayerStores.bodyHeight >= enemy.pos.y - EnemyStores.height && this.pos.y <= enemy.pos.y) {
+                enemy.isAlive = false;
+                return;
+            }
+        }
+
+    }
+};
+
+Player.prototype.beatBucket = function() {
+    for(var i=0; i<BucketStores.buckets.length; i++) {
+        var bucket = BucketStores.buckets[i];
+
+        if(this.lastDirection === "left") {
+            if(bucket.pos.x + bucket.radius  > this.pos.x - 15  && bucket.pos.x + bucket.radius < this.pos.x && this.pos.y + PlayerStores.bodyHeight >= bucket.pos.y - bucket.radius && this.pos.y <= bucket.pos.y) {
+                bucket.isAlive = false;
+                return;
+            }
+        }
+
+        if(this.lastDirection === "right") {
+            if(bucket.pos.x > this.pos.x + PlayerStores.bodyWidth + 15 && bucket.pos.x + bucket.radius < this.pos.x + PlayerStores.bodyWidth + 50 && this.pos.y + PlayerStores.bodyHeight >= bucket.pos.y - bucket.radius && this.pos.y <= bucket.pos.y) {
+                bucket.isAlive = false;
+                return;
+            }
+        }
+    }
+};
+
 Player.prototype.beat = function() {
-    console.log("beat");
-    if(!PlayerStores.getHammer) {
+    if(!PlayerStores.getHammer || this.isClimb) {
         return;
     }
     this.isBeat = true;
@@ -142,6 +186,8 @@ Player.prototype.draw = function() {
         if(this.isBeat) {
             animation = PlayerAnimation.beat(this.lastDirection);
             offset = 22;
+            this.beatEnemies();
+            this.beatBucket();
             if(animation.isFinish) {
                 this.isBeat = false;
             }
@@ -162,9 +208,7 @@ Player.prototype.draw = function() {
         }
     }
 
-
     if(PlayerStores.isDie) {
-        // this.pos.y = FloorStores.getLevels()[this.store.currentLevel].posY - PlayerStores.bodyHeight;
         if(this.pos.y < FloorStores.getLevels()[this.store.currentLevel].posY - PlayerStores.bodyHeight) {
             this.pos.y += 2;
         }
@@ -177,7 +221,6 @@ Player.prototype.draw = function() {
     if(PlayerStores.isWin) {
         animation = PlayerAnimation.stand(this.lastDirection);
     }
-
 
     if(animation) {
         posX = animation.posX;
