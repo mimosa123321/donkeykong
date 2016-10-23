@@ -169,7 +169,19 @@ Player.prototype.beat = function() {
 
 Player.prototype.die = function() {
     PlayerStores.isDie = true;
-    SoundManager.play(SoundManager.SOUND_DIE);
+    var randomDieSoundArray = [
+        SoundManager.SOUND_DIE_0,
+        SoundManager.SOUND_DIE_1,
+        SoundManager.SOUND_DIE_2,
+        SoundManager.SOUND_DIE_3,
+        SoundManager.SOUND_DIE_4,
+        SoundManager.SOUND_DIE_5,
+        SoundManager.SOUND_DIE_6,
+        SoundManager.SOUND_DIE_7,
+        SoundManager.SOUND_DIE_8
+    ];
+    var randomDieSound = randomDieSoundArray[Math.floor(Math.random() * randomDieSoundArray.length)];
+    SoundManager.play(randomDieSound);
     GameStores.isStartGame = false;
 };
 

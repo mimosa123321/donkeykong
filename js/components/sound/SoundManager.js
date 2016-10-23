@@ -3,7 +3,15 @@ var SoundManager = {
     SOUND_START: 9,
     SOUND_JUMP: 6,
     SOUND_WALK: 8,
-    SOUND_DIE: 1,
+    SOUND_DIE_0: 1,
+    SOUND_DIE_1: 16,
+    SOUND_DIE_2: 17,
+    SOUND_DIE_3: 18,
+    SOUND_DIE_4: 19,
+    SOUND_DIE_5: 20,
+    SOUND_DIE_6: 21,
+    SOUND_DIE_7: 22,
+    SOUND_DIE_8: 23,
     SOUND_WIN: 4,
     SOUND_CLIMB: 7,
     SOUND_HAMMER: 2,
@@ -41,13 +49,21 @@ var SoundManager = {
             'sounds/jump.wav',          // 6
             'sounds/climb.mp3',         // 7
             'sounds/walking.wav'  ,     // 8
-            'sounds/gamestart.mp3',       // 9
+            'sounds/gamestart.mp3',     // 9
             'sounds/death2.wav',        // 10
-            'sounds/kongwin.mp3',        // 11
-            'sounds/saveprincess.mp3',        // 12
-            'sounds/failure.mp3',         // 13
+            'sounds/kongwin.mp3',       // 11
+            'sounds/saveprincess.mp3',  // 12
+            'sounds/failure.mp3',       // 13
             'sounds/shoot.wav',         // 14
-            'sounds/win_outro.mp3'         // 15
+            'sounds/win_outro.mp3',     // 15
+            'sounds/death_1.wav',       // 16
+            'sounds/death_2.wav',       // 17
+            'sounds/death_3.wav',       // 18
+            'sounds/death_4.wav',       // 19
+            'sounds/death_5.wav',       // 20
+            'sounds/death_6.wav',       // 21
+            'sounds/death_7.wav',       // 22
+            'sounds/death_8.wav'        // 23
         ], onLoaded);
         loader.load();
     },
