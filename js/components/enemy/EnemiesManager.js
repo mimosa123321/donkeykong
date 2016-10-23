@@ -6,12 +6,18 @@ var EnemiesManager = function() {
 };
 
 EnemiesManager.prototype.initBucket = function() {
+    if(GameStores.level === 3) {
+        this.maxEnemies= 8;
+    }
+
     for(var i=0; i<this.maxEnemies; i++) {
         var type;
         if(GameStores.level === 1) {
             type = "fire";
-        }else {
+        }else if(GameStores.level === 2) {
             type = "water";
+        }else {
+            type = (Math.ceil(Math.random()*2) === 1)? "fire":"water";
         }
         var randomFloor = Math.floor(Math.random()* 6);
         var enemy = new Enemy(type, randomFloor);

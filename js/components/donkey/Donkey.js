@@ -24,6 +24,10 @@ Donkey.prototype.init = function() {
 
     this.animation = new DonkeyAnimation();
 
+    if(GameStores.level === 3) {
+        this.throwTimer= 120;
+    }
+
     var startPoint = this.setStartPoint();
 
     //for bucket initial position use

@@ -1,6 +1,6 @@
 var BucketsManager = function() {
     this.noOfBucket = 0;
-    this.maxBuckets = 10;
+    this.maxBuckets = 20;
     this.isOutBucket = false;
     // this.timer = null;
     // this.initBucket();
