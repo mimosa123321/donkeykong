@@ -1,9 +1,10 @@
-var floorsManager, player, ladders, bucketsManager, donkey, princess, enemiesManager, hammer;
+var floorsManager, player, ladders, bucketsManager, donkey, princess, enemiesManager, hammer, isInitSound =false;
 function init() {
     this.isShowPanel = false;
 
     SoundManager.initialize(function() {
         SoundManager.play(SoundManager.SOUND_INTRO);
+        isInitSound = true;
     });
 
     UIElements.intro();
@@ -214,8 +215,10 @@ function initKeyBoard() {
             }
         }else {
             if(event.keyCode === 13 ) { //press enter to start
-                console.log("start game");
-                startGame();
+                if(isInitSound) {
+                    console.log("start game");
+                    startGame();
+                }
             }
         }
 
