@@ -121,4 +121,9 @@ Enemy.prototype.draw = function() {
     }
 };
 
+Enemy.prototype.reset = function() {
+    this.currentLevel = Math.floor(Math.random()* 6);
+    this.init();
+};
+
 

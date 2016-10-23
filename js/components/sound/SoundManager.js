@@ -1,16 +1,21 @@
 var SoundManager = {
     SOUND_INTRO: 5,
-    SOUND_JUMP: 7,
-    SOUND_WALK: 9,
+    SOUND_START: 9,
+    SOUND_JUMP: 6,
+    SOUND_WALK: 8,
     SOUND_DIE: 1,
     SOUND_WIN: 4,
-    SOUND_CLIMB: 8,
+    SOUND_CLIMB: 7,
     SOUND_HAMMER: 2,
     SOUND_HAMMER_PUNCH: 0,
     SOUND_THROW_BARREL: 3,
-    SOUND_DONKEY_WIN: 6,
+    SOUND_LOSE_LIFE: 10,
+    SOUND_DONKEY_WIN: 11,
+    SOUND_SAVE_PRINCESS: 12,
+    SOUND_FAILURE: 13,
     context: new AudioContext(),
     currentSounds: [],
+    currentSound: null,
     initialize: function(callback) {
 
         function onLoaded(buffers) {
@@ -25,10 +30,14 @@ var SoundManager = {
             'sounds/throwbarrel.mp3',   // 3
             'sounds/win.mp3',           // 4
             'sounds/intro.mp3',         // 5
-            'sounds/dkwin.mp3',         // 6
-            'sounds/jump.wav',          // 7
-            'sounds/climb.mp3',         // 8
-            'sounds/walking.wav',       // 9
+            'sounds/jump.wav',          // 6
+            'sounds/climb.mp3',         // 7
+            'sounds/walking.wav'  ,     // 8
+            'sounds/gamestart.mp3',       // 9
+            'sounds/death2.wav',        // 10
+            'sounds/kongwin.mp3',        // 11
+            'sounds/saveprincess.mp3',        // 12
+            'sounds/failure.mp3'         // 13
         ], onLoaded);
         loader.load();
     },
@@ -41,6 +50,13 @@ var SoundManager = {
             }
         }
     },
+    stop:function() {
+        if(this.currentSound) {
+            this.currentSound.stop();
+        }
+
+    },
+
     play: function(soundIndex) {
         if(!SoundManager.context.buffers) {
             return;
@@ -59,14 +75,14 @@ var SoundManager = {
 
         if(!ignoreSound) {
             // Start play and add to current sounds array
-            var currentSound = SoundManager.context.createBufferSource();
-            currentSound.buffer = SoundManager.context.buffers[soundIndex];
-            currentSound.connect(SoundManager.context.destination);
-            currentSound.start(0);
+            this.currentSound = SoundManager.context.createBufferSource();
+            this.currentSound.buffer = SoundManager.context.buffers[soundIndex];
+            this.currentSound.connect(SoundManager.context.destination);
+            this.currentSound.start(0);
 
-            SoundManager.currentSounds.push({ soundIndex: soundIndex, sound: currentSound });
+            SoundManager.currentSounds.push({ soundIndex: soundIndex, sound: this.currentSound });
 
-            currentSound.onended = function() {
+            this.currentSound.onended = function() {
                 SoundManager.resetSound(soundIndex);
             }
         }

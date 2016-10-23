@@ -2,20 +2,18 @@ var floorsManager, player, ladders, bucketsManager, donkey, princess, enemiesMan
 function init() {
     this.isShowPanel = false;
 
-
     SoundManager.initialize(function() {
         SoundManager.play(SoundManager.SOUND_INTRO);
-        initCanvas();
     });
 
-    /*UIElements.showPanel("intro");
+    UIElements.intro();
+    initKeyBoard();
+}
 
-     setTimeout(function() {
-     initCanvas();
-     }, 2000);
-     setTimeout(function() {
-     UIElements.hidePanel("intro");
-     }, 4000);*/
+function startGame() {
+    UIElements.hideIntro("intro");
+    SoundManager.stop();
+    initCanvas();
 }
 
 function initCanvas() {
@@ -29,17 +27,16 @@ function initCanvas() {
         return;
     }
 
-
     initFloor();
     initLadder();
     initPlayer();
-    initKeyBoard();
     initBucket();
     initDockey();
     initEnemy();
     initPrincess();
     initHammer();
 
+    UIElements.updateScore();
     setInterval(draw, 10);
 }
 
@@ -88,7 +85,6 @@ function draw() {
     enemiesManager.draw();
     hammer.draw();
 
-
     /*------------------die----------------------*/
     if(!this.isShowPanel && PlayerStores.isDie) {
         this.isShowPanel = true;
@@ -114,6 +110,7 @@ function goDie() {
     if(PlayerStores.totalLife <= 0) {
         setTimeout(function(){
             UIElements.showPanel("gameOver");
+            SoundManager.play(SoundManager.SOUND_FAILURE);
         },3000);
         return;
     }
@@ -128,10 +125,13 @@ function goDie() {
 
 function goNextLevel() {
     GameStores.level += 1;
+    GameStores.totalScore += 10000;
 
+    UIElements.updateScore();
     if(GameStores.level > GameStores.maxLevel) {
         setTimeout(function(){
             UIElements.showPanel("win");
+            SoundManager.play(SoundManager.SOUND_SAVE_PRINCESS);
         },1500);
         return;
     }
@@ -178,45 +178,52 @@ function resetStores() {
     PlayerStores.isWin = false;
 }
 
-
-
 function initKeyBoard() {
     document.addEventListener('keydown', function(event){
-        switch (event.keyCode) {
-            case 37:
-                player.direction = 'left';
-                break;
-            case 39:
-                player.direction = 'right';
-                break;
-            case 32:
-                player.startJump();
-                break;
-            case 38:
-                if(!player.isJump) {
-                    player.climb("up");
-                }
-                break;
-            case 40:
-                if(!player.isJump) {
-                    player.climb("down");
-                }
-                break;
-            case 16:
-                if(!player.isJump) {
-                    player.beat();
-                }
-                break;
-            default:
-                break;
+        if(GameStores.isStartGame) {
+            console.log("start game:" , event.keyCode);
+            switch (event.keyCode) {
+                case 37:
+                    player.direction = 'left';
+                    break;
+                case 39:
+                    player.direction = 'right';
+                    break;
+                case 32:
+                    player.startJump();
+                    break;
+                case 38:
+                    if (!player.isJump) {
+                        player.climb("up");
+                    }
+                    break;
+                case 40:
+                    if (!player.isJump) {
+                        player.climb("down");
+                    }
+                    break;
+                case 16:
+                    if (!player.isJump) {
+                        player.beat();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }else {
+            if(event.keyCode === 13 ) { //press enter to start
+                console.log("Start game");
+                startGame();
+            }
         }
     });
 
     document.addEventListener('keyup', function(event){
-        if(event.keyCode === 39 || event.keyCode === 37) {
-            player.restoreKey();
+        if(GameStores.isStartGame) {
+            if(event.keyCode === 39 || event.keyCode === 37) {
+                player.restoreKey();
+            }
         }
-
     });
 }
 

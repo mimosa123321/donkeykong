@@ -179,8 +179,6 @@ AnimalBase.prototype.collideFloor = function() {
         this.destFallY = FloorStores.getLevels()[currentLevel - 1].posY;
     }
 
-    // console.log(this.lastDirection);
-    // console.log(offset);
 
     for(i=0; i<floor.length; i++) {
         var tile = floor[i],

@@ -1,5 +1,7 @@
 var EnemiesManager = function() {
     this.maxEnemies= 5;
+    this.resetTimer = 200;
+    this.resetCountDown = 0;
     this.initBucket();
 };
 
@@ -19,18 +21,25 @@ EnemiesManager.prototype.initBucket = function() {
 
 EnemiesManager.prototype.draw = function() {
     var i, enemies = EnemyStores.enemies;
-    for(i=0; i<enemies.length; i++) {
-        var enemy = enemies[i];
-        if(enemy.isAlive) {
-            enemy.draw();
+    if(GameStores.isStartGame) {
+        for(i=0; i<enemies.length; i++) {
+            var enemy = enemies[i];
+            if(enemy.isAlive) {
+                enemy.draw();
+            }else {
+                this.resetCountDown += 1;
+                if(this.resetCountDown >= this.resetTimer) {
+                    enemy.reset();
+                    this.resetCountDown = 0;
+                }
+            }
         }
-
     }
 };
 
 EnemiesManager.prototype.reset = function() {
     EnemyStores.enemies = [];
-
+    this.resetCountDown = 0;
     this.initBucket();
 };
 

@@ -5,7 +5,7 @@ var Donkey = function() {
     this.isBeat = true;
     this.isStartIntro = false;
     this.currentTime = 0;
-    this.introTimer = 100;
+    this.introTimer = 400;
 
     this.currentThrowTimer= 0;
     this.throwTimer= 200;
@@ -42,10 +42,12 @@ Donkey.prototype.init = function() {
     this.donkeyImg.src = './images/donkeyss.png';
 
     this.isStartIntro = true;
+
+    SoundManager.play(SoundManager.SOUND_START);
+
 };
 
 Donkey.prototype.setStartPoint = function() {
-    console.log(FloorStores.getLadderMap()[this.currentLevel - 1]);
     var topFloor  = FloorStores.getFloorsMap()[this.currentLevel].floorMap;
     for(var i=8; i<topFloor.length; i++) {
         var tile = topFloor[i];
@@ -73,6 +75,7 @@ Donkey.prototype.draw = function() {
             if(this.currentTime >= this.introTimer) {
                 this.isBeat = false;
                 this.isStartIntro = false;
+                GameStores.isStartGame = true;
             }
         }
 
@@ -114,7 +117,7 @@ Donkey.prototype.draw = function() {
         }
     }
 
-    if(PlayerStores.isDie) {
+    if(GameStores.isStartGame && PlayerStores.isDie) {
         SoundManager.play(SoundManager.SOUND_DONKEY_WIN);
         this.animation.win();
     }
@@ -139,7 +142,7 @@ Donkey.prototype.reset = function() {
     this.animation;
 
     this.currentTime = 0;
-    this.introTimer = 100;
+    this.introTimer = 400;
 
     this.currentThrowTimer= 0;
     this.throwTimer= 200;
@@ -155,6 +158,7 @@ Donkey.prototype.reset = function() {
 
     setTimeout(function(){
         _this.isStartIntro = true;
+        SoundManager.play(SoundManager.SOUND_START);
     }, 1000);
 
 };

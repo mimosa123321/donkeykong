@@ -1,0 +1,123 @@
+#intro #title #letter_d {
+    /*-webkit-animation: show-title-ani 0.5s ease-out 0.2s;*/
+    animation: show-title-ani 0.5s ease-out 0.2s;
+    /*-webkit-animation-fill-mode: forwards;*/
+    animation-fill-mode: forwards;
+}
+
+#intro #title #letter_o {
+    /*-webkit-animation: show-title-ani 0.5s ease-out 0.4s;*/
+    animation: show-title-ani 0.5s ease-out 0.4s;
+    /*-webkit-animation-fill-mode: forwards;*/
+    animation-fill-mode: forwards;
+}
+
+
+#intro #title #letter_n {
+    /*-webkit-animation: show-title-ani 0.5s ease-out 0.6s;*/
+    animation: show-title-ani 0.5s ease-out 0.6s;
+    /*-webkit-animation-fill-mode: forwards;*/
+    animation-fill-mode: forwards;
+}
+
+
+#intro #title #letter_k {
+    /*-webkit-animation: show-title-ani 0.5s ease-out 0.8s;*/
+    animation: show-title-ani 0.5s ease-out 0.8s;
+    /*-webkit-animation-fill-mode: forwards;*/
+    animation-fill-mode: forwards;
+}
+
+#intro #title #letter_e {
+    /*-webkit-animation: show-title-ani 0.5s ease-out 1s;*/
+    animation: show-title-ani 0.5s ease-out 1s;
+    /*-webkit-animation-fill-mode: forwards;*/
+    animation-fill-mode: forwards;
+}
+
+#intro #title #letter_y {
+    /*-webkit-animation: show-title-ani 0.5s ease-out 1.2s;*/
+    animation: show-title-ani 0.5s ease-out 1.2s;
+    /*-webkit-animation-fill-mode: forwards;*/
+    animation-fill-mode: forwards;
+}
+
+#intro #title #letter_k2 {
+    /*-webkit-animation: show-title-ani 0.5s ease-out 1.2s;*/
+    animation: show-title-ani2 0.5s ease-out 1.2s;
+    /*-webkit-animation-fill-mode: forwards;*/
+    animation-fill-mode: forwards;
+}
+
+#intro #title #letter_o2 {
+    /*-webkit-animation: show-title-ani 0.5s ease-out 1.2s;*/
+    animation: show-title-ani2 0.5s ease-out 1.3s;
+    /*-webkit-animation-fill-mode: forwards;*/
+    animation-fill-mode: forwards;
+}
+
+
+#intro #title #letter_n2 {
+    /*-webkit-animation: show-title-ani 0.5s ease-out 1.2s;*/
+    animation: show-title-ani2 0.5s ease-out 1.4s;
+    /*-webkit-animation-fill-mode: forwards;*/
+    animation-fill-mode: forwards;
+}
+
+
+#intro #title #letter_g {
+    /*-webkit-animation: show-title-ani 0.5s ease-out 1.2s;*/
+    animation: show-title-ani2 0.5s ease-out 1.5s;
+    /*-webkit-animation-fill-mode: forwards;*/
+    animation-fill-mode: forwards;
+}
+
+
+#intro #intro-donkey.play {
+    animation: show-character 5s ease-out;
+    /*-webkit-animation-fill-mode: forwards;*/
+    animation-fill-mode: forwards;
+}
+
+
+#intro #intro-mario.play {
+    animation: show-character 5s ease-out;
+    /*-webkit-animation-fill-mode: forwards;*/
+    animation-fill-mode: forwards;
+}
+
+#intro p{
+    animation: show-text 1s linear infinite;
+    /*-webkit-animation-fill-mode: forwards;*/
+    animation-fill-mode: forwards;
+}
+
+
+@keyframes show-title-ani {
+    0%   {  transform: scale(0); opacity:0;  }
+    100%   { transform: scale(1); opacity:1;}
+}
+
+
+@keyframes show-title-ani2 {
+    0%   {  transform: translate3d(0, -100%, 0); opacity:0;  }
+    100%   { transform: translate3d(0, 0, 0); opacity:1;}
+}
+
+@keyframes show-character {
+    0%   {  transform: translate3d(100%, 0, 0);  }
+    25%   {  transform: translate3d(0, 0, 0);  }
+    50%   { transform: translate3d(0, 0, 0); }
+    75%   { transform: translate3d(0, 0, 0); }
+    100%   { transform: translate3d(-100%, 0, 0); }
+}
+
+@keyframes show-text {
+    0%   {  transform: scale(1); opacity:0;  }
+    50%   {  transform: scale(1); opacity:0.8;  }
+    100%   { transform: scale(1); opacity:1;}
+}
+
+
+
+

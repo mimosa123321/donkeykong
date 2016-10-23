@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Donkey Kong</title>
+    <link rel="stylesheet" href="css/fonts.css">
+    <link rel="stylesheet" href="css/animate.css">
     <link rel="stylesheet" href="css/main.css">
+    <script type="application/javascript" src="lib/jquery-1.11.1.min.js"></script>
     <script type="application/javascript" src="js/stores/GameStores.js"></script>
     <script type="application/javascript" src="js/stores/FloorStores.js"></script>
     <script type="application/javascript" src="js/stores/PlayerStores.js"></script>
@@ -40,12 +43,6 @@
 
 <div id="wrapper">
     <div id="panel">
-        <div id="intro">
-            <img class="intro-logo" src="images/intro_logo.png">
-            <img class="intro-donkey" src="images/intro_donkey.gif">
-            <img class="intro-copyright" src="images/intro_copyright.png">
-        </div>
-
         <div id="die">
             <img src="images/lifescreen.png">
             <img src="images/lifescreen.png">
@@ -66,14 +63,40 @@
             <h1>You got her!</h1>
         </div>
     </div>
-    <div id="marioLife">
-        <img src="images/life.png">
-        <img src="images/life.png">
-        <img src="images/life.png">
+    <div id="topBar">
+        <div id="marioLife">
+            <img src="images/life.png">
+            <img src="images/life.png">
+            <img src="images/life.png">
+        </div>
+        <div id="gameLevels">
+            <h1>Level 1</h1>
+        </div>
+        <div id="score">0</div>
     </div>
-    <div id="gameLevels">
-        <h1>Level 1</h1>
+
+    <div id="intro">
+        <div id="title">
+            <div id="line1">
+                <div class="letter" id="letter_d"><img src="images/intro/d.png"></div>
+                <div class="letter" id="letter_o"><img src="images/intro/o.png"></div>
+                <div class="letter" id="letter_n"><img src="images/intro/n.png"></div>
+                <div class="letter" id="letter_k"><img src="images/intro/k.png"></div>
+                <div class="letter" id="letter_e"><img src="images/intro/e.png"></div>
+                <div class="letter" id="letter_y"><img src="images/intro/y.png"></div>
+            </div>
+            <div id="line2">
+                <div class="letter" id="letter_k2"><img src="images/intro/k2.png"></div>
+                <div class="letter" id="letter_o2"><img src="images/intro/o2.png"></div>
+                <div class="letter" id="letter_n2"><img src="images/intro/n.png"></div>
+                <div class="letter" id="letter_g"><img src="images/intro/g.png"></div>
+            </div>
+        </div>
+        <div id="intro-donkey"><img src="images/intro_donkey.gif"></div>
+        <div id="intro-mario"><img src="images/intro_mario.gif"></div>
+        <p>Press Enter To Start</p>
     </div>
+
 
     <div id="gameScene">
         <canvas id="canvas"></canvas>

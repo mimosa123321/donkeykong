@@ -33,7 +33,6 @@ BucketsManager.prototype.draw = function() {
         if(bucket.isAlive) { //not draw when player beat the bucket
             bucket.draw();
         }
-
     }
 };
 
@@ -42,6 +41,12 @@ BucketsManager.prototype.reuse = function() {
     for(i=0; i<buckets.length; i++) {
         var bucket = buckets[i];
         if(bucket.isReset) {
+            bucket.reset();
+            break;
+        }
+
+        //if bucket is broken, reuse!!
+        if(!bucket.isAlive) {
             bucket.reset();
             break;
         }
