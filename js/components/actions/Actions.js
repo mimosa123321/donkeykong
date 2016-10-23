@@ -127,17 +127,13 @@ var Actions = {
                 continue;
             }
         }
-
         return false;
-
     },
 
     enemyCollideLadder: function(x, y, width, height, currentLevel, direction, offset) {
         var i,j,
             posX = x,
-            posY = y,
             currentLevel = currentLevel,
-            destY,
             upLadders =[],
             downLadders = [];
 
@@ -176,34 +172,36 @@ var Actions = {
     climb:function(x, y, width, height, direction, currentLevel, ladder) {
         var posX = x,
             posY = y,
+            isFinishClimb = false,
             destY;
-        console.log('climbing');
         switch (direction) {
             case "up":
-                posY -= 1;
+                posY -= 0.5;
                 destY = FloorStores.getLevels()[currentLevel + 1].posY; //destY is at one top level
-                if(posY + height <= destY ) { //if reach the destination, climb is not allowed
-                    posY = destY - height;
+                if(posY <= destY ) { //if reach the destination, climb is not allowed
+                    posY = destY;
+                    isFinishClimb = true;
+
                 }
+                posX = ladder.x + 8;
                 break;
 
             case "down":
-                posY += 1;
+                posY += 0.5;
                 destY = FloorStores.getLevels()[currentLevel - 1].posY;
-                if(posY + height >= destY ) {
-                    posY = destY - height;
+                if(posY >= destY ) {
+                    posY = destY;
+                    isFinishClimb = true;
                 }
+                posX = ladder.x + 8;
                 break;
 
             default:
                 break;
+
+
+
         }
-
-        // this.pos.x = ladder.x + 8;
-        // this.pos.y = posY;
-
-        // console.log(ladder);
-        return {x:ladder.x + 8, y:posY}
-
+        return {x:posX, y:posY, isFinishClimb:isFinishClimb}
     }
 };
