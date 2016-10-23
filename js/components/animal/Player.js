@@ -8,6 +8,7 @@ var Player = function() {
     this.isFall = false;
     this.isBeat = false;
     this.lastDirection = 'right';
+    this.isBeatBingo = false;
 
     AnimalBase.call(this, PlayerStores);
     this.setInitialPosition();
@@ -43,7 +44,7 @@ Player.prototype.collideBucket = function() {
         var bucket = BucketStores.buckets[i];
         if(bucket.isAlive) {
             if (this.pos.x + PlayerStores.bodyWidth - 4 >= bucket.pos.x + 7 && this.pos.x <= bucket.pos.x + bucket.radius && this.pos.y + PlayerStores.bodyHeight >= bucket.pos.y - bucket.radius && this.pos.y <= bucket.pos.y) {
-                this.die();
+                // this.die();
                 return;
             }
         }
@@ -90,15 +91,31 @@ Player.prototype.beatEnemies = function() {
         var enemy = EnemyStores.enemies[i];
         if(this.lastDirection === "left") {
             if(enemy.pos.x + EnemyStores.width > this.pos.x - 15  && enemy.pos.x + EnemyStores.width < this.pos.x && this.pos.y + PlayerStores.bodyHeight >= enemy.pos.y - EnemyStores.height && this.pos.y <= enemy.pos.y) {
-                enemy.isAlive = false;
-                return;
+                if(enemy.isAlive) {
+                    enemy.isAlive = false;
+                    if(!this.isBeatBingo) {
+                        GameStores.totalScore += 500;
+                        UIElements.updateScore();
+                        SoundManager.play(SoundManager.SOUND_SHOOT);
+                        this.isBeatBingo = true;
+                    }
+                    return;
+                }
             }
         }
 
         if(this.lastDirection === "right") {
             if(enemy.pos.x > this.pos.x + PlayerStores.bodyWidth + 15 &&  enemy.pos.x + EnemyStores.width < this.pos.x + PlayerStores.bodyWidth + 50 && this.pos.y + PlayerStores.bodyHeight >= enemy.pos.y - EnemyStores.height && this.pos.y <= enemy.pos.y) {
-                enemy.isAlive = false;
-                return;
+                if(enemy.isAlive) {
+                    enemy.isAlive = false;
+                    if (!this.isBeatBingo) {
+                        GameStores.totalScore += 500;
+                        UIElements.updateScore();
+                        SoundManager.play(SoundManager.SOUND_SHOOT);
+                        this.isBeatBingo = true;
+                    }
+                    return;
+                }
             }
         }
 
@@ -111,15 +128,31 @@ Player.prototype.beatBucket = function() {
 
         if(this.lastDirection === "left") {
             if(bucket.pos.x + bucket.radius  > this.pos.x - 15  && bucket.pos.x + bucket.radius < this.pos.x && this.pos.y + PlayerStores.bodyHeight >= bucket.pos.y - bucket.radius && this.pos.y <= bucket.pos.y) {
-                bucket.isAlive = false;
-                return;
+                if(bucket.isAlive) {
+                    bucket.isAlive = false;
+                    if (!this.isBeatBingo) {
+                        GameStores.totalScore += 500;
+                        UIElements.updateScore();
+                        SoundManager.play(SoundManager.SOUND_SHOOT);
+                        this.isBeatBingo = true;
+                    }
+                    return;
+                }
             }
         }
 
         if(this.lastDirection === "right") {
             if(bucket.pos.x > this.pos.x + PlayerStores.bodyWidth + 15 && bucket.pos.x + bucket.radius < this.pos.x + PlayerStores.bodyWidth + 50 && this.pos.y + PlayerStores.bodyHeight >= bucket.pos.y - bucket.radius && this.pos.y <= bucket.pos.y) {
-                bucket.isAlive = false;
-                return;
+                if(bucket.isAlive) {
+                    bucket.isAlive = false;
+                    if (!this.isBeatBingo) {
+                        GameStores.totalScore += 500;
+                        UIElements.updateScore();
+                        SoundManager.play(SoundManager.SOUND_SHOOT);
+                        this.isBeatBingo = true;
+                    }
+                    return;
+                }
             }
         }
     }
@@ -137,11 +170,13 @@ Player.prototype.beat = function() {
 Player.prototype.die = function() {
     PlayerStores.isDie = true;
     SoundManager.play(SoundManager.SOUND_DIE);
+    GameStores.isStartGame = false;
 };
 
 Player.prototype.win = function() {
     PlayerStores.isWin = true;
     SoundManager.play(SoundManager.SOUND_WIN);
+    GameStores.isStartGame = false;
 };
 
 Player.prototype.draw = function() {
@@ -172,7 +207,6 @@ Player.prototype.draw = function() {
 
         if(this.isClimb) {
             animation = PlayerAnimation.climb();
-            SoundManager.play(SoundManager.SOUND_CLIMB);
         }
 
         if(!this.isJump && !this.isClimb && !this.isFall) {
@@ -190,6 +224,7 @@ Player.prototype.draw = function() {
             this.beatBucket();
             if(animation.isFinish) {
                 this.isBeat = false;
+                this.isBeatBingo = false;
             }
         }
 

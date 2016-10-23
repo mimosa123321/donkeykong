@@ -13,7 +13,7 @@ Ladders.prototype.init = function() {
             randomTilesForLadder = [];
 
         if(!upFloor) {
-            console.log("object not exist");
+            // console.log("object not exist");
             continue;
         }
 
@@ -41,7 +41,7 @@ Ladders.prototype.init = function() {
                             //ensure the ladders cannot be so close
                             distanceBetweenPrevLadder = tile.x - randomTilesForLadder[randomTilesForLadder.length - 1].x;
                             if(distanceBetweenPrevLadder < FloorStores.tileWidth * 5) {
-                                console.log("ladders are too close:", tile);
+                                // console.log("ladders are too close:", tile);
                                 continue;
                             }
                         }
@@ -59,7 +59,7 @@ Ladders.prototype.init = function() {
 
             //if no ladder is generated, add the last tile for ladder (at least one tile for each level)
             if(j=== floor.floorMap.length - 1 && randomTilesForLadder.length === 0) {
-                console.log("level ",i, " no generated ladder - put last tile as ladder");
+                // console.log("level ",i, " no generated ladder - put last tile as ladder");
                 randomTilesForLadder.push(lastTile);
             }
         }

@@ -40,13 +40,25 @@ var UIElements = {
     },
 
     intro: function() {
-        var el = document.getElementById("intro");
-        el.className = "show";
+        animate.animationEnd($('#letter_g'), function() {
+            $('#intro-mario').removeClass('play');
+            $('#intro-donkey').addClass('play');
+        });
+
+        animate.animationEnd($('#intro-donkey'), function() {
+            $('#intro-donkey').removeClass('play');
+            $('#intro-mario').addClass('play');
+        });
+
+        animate.animationEnd($('#intro-mario'), function() {
+            $('#intro-mario').removeClass('play');
+            $('#intro-donkey').addClass('play');
+        });
     },
 
     hideIntro: function() {
         var el = document.getElementById("intro");
-        el.className = "";
+        el.className = "hide";
     },
 
     loseLife: function() {
@@ -58,6 +70,10 @@ var UIElements = {
         setTimeout(function(){
             disappearLife.className = "hide";
         },100);
+
+        setTimeout(function(){
+            SoundManager.play(SoundManager.SOUND_LOSE_LIFE);
+        },950);
     },
 
     hideLoseLife: function() {
@@ -110,9 +126,32 @@ var UIElements = {
     updateLevels: function() {
         var el = document.getElementById("gameLevels");
         var h1 = el.getElementsByTagName("h1")[0];
-        console.log(GameStores.level);
         h1.innerHTML = "Level " + GameStores.level;
-        console.log(h1);
+    },
+
+    updateScore: function() {
+        var el = document.getElementById("score");
+        el.innerHTML = GameStores.totalScore;
+    }
+};
+
+var animate = {
+    transitionEnd: function(ele, callbackFunc) {
+        $(ele).unbind('webkitTransitionEnd transitionend msTransitionEnd oTransitionEnd');
+        $(ele).bind('webkitTransitionEnd transitionend msTransitionEnd oTransitionEnd', function() {
+            $(ele).unbind('webkitTransitionEnd transitionend msTransitionEnd oTransitionEnd');
+            if (callbackFunc) {
+                callbackFunc.apply();
+            }
+        });
+    },
+
+    animationEnd: function(ele, callbackFunc) {
+        $(ele).bind('animationend webkitAnimationEnd MSAnimationEnd oanimationend', function() {
+            if (callbackFunc) {
+                callbackFunc.apply();
+            }
+        });
     }
 };
 

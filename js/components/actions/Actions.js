@@ -130,6 +130,81 @@ var Actions = {
 
         return false;
 
-    }
+    },
 
+    enemyCollideLadder: function(x, y, width, height, currentLevel, direction, offset) {
+        var i,j,
+            posX = x,
+            posY = y,
+            currentLevel = currentLevel,
+            destY,
+            upLadders =[],
+            downLadders = [];
+
+        if (currentLevel === 0) { //if level 0, no down level
+            upLadders = FloorStores.getLadderMap()[currentLevel];
+            downLadders = [];
+        }else {
+            upLadders = FloorStores.getLadderMap()[currentLevel];
+            downLadders = FloorStores.getLadderMap()[currentLevel-1];
+        }
+
+        for(i=0; i<upLadders.length; i++) {
+            var upLadder = upLadders[i];
+
+            //czeck collision with ladder
+            if(posX > upLadder.x + offset.minX && posX + width < upLadder.x + FloorStores.ladderWidth) {
+                console.log("can up");
+                return {isClimb: "up", ladder: upLadder} ;
+            }else {
+                continue;
+            }
+        }
+
+        for(j=0; j<downLadders.length; j++) {
+            var downLadder = downLadders[j];
+
+            //czeck collision with ladder
+            if(posX > downLadder.x + offset.minX && posX + width < downLadder.x + FloorStores.ladderWidth) {
+                console.log("can down");
+                return {isClimb: "down", ladder: downLadder};
+            }else {
+                continue;
+            }
+        }
+        return {isClimb: "no"};
+    },
+
+    climb:function(x, y, width, height, direction, currentLevel, ladder) {
+        var posX = x,
+            posY = y,
+            destY;
+        switch (direction) {
+            case "up":
+                posY -= 4;
+                destY = FloorStores.getLevels()[currentLevel + 1].posY; //destY is at one top level
+                if(posY + height <= destY ) { //if reach the destination, climb is not allowed
+                    posY = destY - height;
+                }
+                break;
+
+            case "down":
+                posY += 4;
+                destY = FloorStores.getLevels()[currentLevel - 1].posY;
+                if(posY + height >= destY ) {
+                    posY = destY - height;
+                }
+                break;
+
+            default:
+                break;
+        }
+
+        // this.pos.x = ladder.x + 8;
+        // this.pos.y = posY;
+
+        // console.log(ladder);
+        // return {x:0 + 8, y:posY}
+
+    }
 };

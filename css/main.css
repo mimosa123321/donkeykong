@@ -4,7 +4,7 @@ html, body {
     padding: 0;
     margin: 0;
     background-color: #232323;
-    font-family: Arial, Helvetica;
+    font-family: 'KemcoPixelBold', Arial, Helvetica;
     font-weight: 100;
 }
 
@@ -34,29 +34,72 @@ html, body {
     transform: translate3d(0, 0,0);
 }
 
-#wrapper #panel #intro {
-    display: none;
+#intro {
+    display: block;
     position: absolute;
+    width:800px;
+    height: 700px;
+    top: 0;
     left: 0;
     right: 0;
-    top: 0;
+    margin: auto;
+    z-index: 99;
     text-align: center;
+    overflow: hidden;
+    transition: transform 0.8s ease-out;
+    transform: translate3d(0, 0,0);
+    background-color: black;
 }
-    #wrapper #panel #intro .intro-logo {
-        display: block;
-        margin: 100px auto 100px auto;
+
+    #intro #title {
+        position: absolute;
+        left:0;
+        right:0;
+        top:100px;
+        margin: auto;
     }
-    #wrapper #panel #intro .intro-donkey {
-        display: block;
-        margin: 100px auto 100px auto;
+
+    #intro #title #line1 {
+        margin-bottom: 30px;
     }
-    #wrapper #panel #intro .intro-copyright {
+
+    #intro #title #line1, #intro #title #line2 {
         display: block;
-        margin: 0 auto 0 auto;
+        position: relative;
     }
-    #wrapper #panel #intro.show {
-        display: block;
+
+    #intro #title #line1 .letter, #intro #title #line2 .letter{
+        display: inline-block;
+        opacity: 0;
     }
+
+    #intro #intro-donkey {
+        position: absolute;
+        width: 100%;
+        top: 413px;
+        transform: translate3d(-100%,0,0);
+    }
+
+    #intro #intro-mario {
+        position: absolute;
+        width: 100%;
+        top: 366px;
+        transform: translate3d(-100%,0,0);
+    }
+
+    #intro p {
+        color: white;
+        font-size: 25px;
+        position: absolute;
+        text-align: center;
+        width: 100%;
+        top: 561px;
+    }
+
+#intro.hide {
+    transition: transform 0.8s ease-out;
+    transform: translate3d(0, -100%,0);
+}
 
 #wrapper #panel #die {
     display: none;
@@ -126,7 +169,7 @@ html, body {
 #wrapper #panel #win h1{
     color:white;
     text-align: center;
-    font-family: Arial;
+    font-family: 'KemcoPixelBold', Arial, Helvetica;
     font-weight: 100;
     font-size: 30px;
 }
@@ -149,32 +192,49 @@ html, body {
     vertical-align: middle;
 }
 
+
+#topBar {
+    position: absolute;
+    width: 800px;
+    left:0;
+    right:0;
+    margin: auto;
+    z-index: 3;
+}
+
 #marioLife {
     position: absolute;
-    left: 50%;
-    margin: 15px 0 0 -379px;
-    z-index: 3;
+    left: 20px;
+    top: 20px;
 }
 
 #gameLevels {
     position: absolute;
+    right: 20px;
+    top: 20px;
     color: white;
-    left: 50%;
-    margin: 15px 0 0 287px;
-    z-index: 3;
-    font-size: 12px;
+
 }
 
 #gameLevels h1 {
     padding:0;
     margin:0;
+    font-size: 28px;
 }
 
-
+#score {
+    position: absolute;
+    right:20px;
+    top: 50px;
+    text-align: right;
+    color: white;
+    font-size: 28px;
+}
 
 #gameScene {
     position: relative;
     width: 800px;
+    height: 700px;
     margin: 0 auto;
     overflow: hidden;
 }
@@ -182,4 +242,6 @@ html, body {
 canvas {
     /*border: 1px solid grey;*/
     background-color: black;
+    width: 800px;
+    height: 700px;
 }

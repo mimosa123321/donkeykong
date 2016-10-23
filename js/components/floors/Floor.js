@@ -72,7 +72,7 @@ Floor.prototype.isHole = function(tileId) {
     //check if previous tile is a hole, if yes , return false - prevent two holes link together
     if(this.floorMap[tileId - 1]) {
         if(this.floorMap[tileId - 1].type === 'hole') {
-            console.log("double holes");
+            // console.log("double holes");
             return false;
         }
     }

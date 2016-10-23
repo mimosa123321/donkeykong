@@ -4,6 +4,8 @@ const GameStores = {
     isResetLevel:false,
     level: 1,
     maxLevel: 3,
+    totalScore: 0,
+    isStartGame: false,
     setCanvasContext: function(ctx) {
         this.ctx = ctx;
     },
