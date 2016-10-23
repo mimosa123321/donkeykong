@@ -1,6 +1,6 @@
 var Enemy = function(type, currentLevel) {
-    // this.currentLevel = currentLevel;
-    this.currentLevel = 1; //change later
+    this.currentLevel = currentLevel;
+    // this.currentLevel = 0; //change later
     this.type = type;
     this.speed = 0.5;
     this.ctx = GameStores.getCanvasContext();
@@ -11,7 +11,10 @@ var Enemy = function(type, currentLevel) {
     this.animHeight;
     this.animation;
     this.isAlive;
-    this.isAllowClimb = false;
+    this.isDetectClimb;
+    this.currentClimbTimer;
+    this.resetClimbTimer = 300;
+    this.isClimbing;
     this.init();
 };
 
@@ -19,6 +22,9 @@ var Enemy = function(type, currentLevel) {
 Enemy.prototype.init = function() {
     var _this = this;
     this.isAlive = true;
+    this.isDetectClimb = true;
+    this.isClimbing = false;
+    this.currentClimbTimer = 0;
     var startPoint = this.setStartPoint();
     if(startPoint !== null) {
         this.pos = {
@@ -94,20 +100,23 @@ Enemy.prototype.collideLadder = function() {
     };
 
     this.climbDirection = (Math.ceil(Math.random()*2) === 1)? "top": "down";
-    // console.log(this.direction);
-    // return Actions.collideLadder(this.pos.x, this.pos.y, EnemyStores.width, EnemyStores.height , this.currentLevel, 'down', offset);
     return Actions.enemyCollideLadder(this.pos.x, this.pos.y, EnemyStores.width, EnemyStores.height , this.currentLevel, this.climbDirection , offset);
 
 };
 
 Enemy.prototype.startClimb = function(direction, ladder) {
-    var climbPos =  Actions.climb(this.pos.x, this.pos.y, EnemyStores.width, EnemyStores.height,direction,this.currentLevel,ladder);
+    var climbPos =  Actions.climb(this.pos.x, this.pos.y, EnemyStores.width, EnemyStores.height, direction,this.currentLevel,ladder);
     this.pos.x = climbPos.x;
     this.pos.y = climbPos.y;
+    this.isFinishClimb = climbPos.isFinishClimb;
+    if(this.isFinishClimb) {
+        this.direction =  (Math.ceil(Math.random()*2) === 1)? "left": "right";
+        this.isDetectClimb = false;
+        this.isClimbing = false;
+    }
 };
 
 Enemy.prototype.draw = function() {
-
     if(!PlayerStores.isDie && !PlayerStores.isWin) {
         if (this.collideHole()) {
             if (this.direction === "left") {
@@ -118,14 +127,24 @@ Enemy.prototype.draw = function() {
         }
 
         var myCollideLadder = this.collideLadder();
-        console.log(myCollideLadder.isClimb);
-        /*if(!this.isAllowClimb) {
+        if(this.isDetectClimb && this.currentLevel < 5) {
             if (myCollideLadder.isClimb === "up") {
+                this.isClimbing = true;
                 this.startClimb("up", myCollideLadder.ladder);
             } else if(myCollideLadder.isClimb === "down") {
+                this.isClimbing = true;
                 this.startClimb("down", myCollideLadder.ladder);
+
             }
-        }*/
+        }
+
+        if(this.isFinishClimb) {
+            this.currentClimbTimer += 1;
+            if(this.currentClimbTimer >= this.resetClimbTimer) {
+                this.isDetectClimb = true;
+                this.currentClimbTimer = 0;
+            }
+        }
 
         if(this.pos.x <= 0) {
             this.direction = "right";
@@ -139,6 +158,11 @@ Enemy.prototype.draw = function() {
         this.move();
     }
 
+    if (!this.isClimbing) {
+        var updateLevel = this.updateFloorLevel();
+        this.currentLevel = updateLevel;
+    }
+
     if(this.animation) {
         this.animPosX = this.animation.posX;
         this.animposY = this.animation.posY;
@@ -149,8 +173,35 @@ Enemy.prototype.draw = function() {
     }
 };
 
+Enemy.prototype.updateFloorLevel = function() {
+    var i,
+        posY = this.pos.y,
+        levels = FloorStores.getLevels();
+
+    for (i = 0; i < levels.length; i++) {
+        var levelPosY = levels[i].posY;
+        var nextLevelPosY;
+
+        if (i === 0) {
+            if (posY > levelPosY) {
+                return i;
+            }
+        }
+
+        if (i < levels.length - 1) {
+            nextLevelPosY = levels[i + 1].posY;
+            if (posY <= levelPosY && posY > nextLevelPosY) {
+                return i;
+            }
+        } else {
+            return levels.length - 1;
+        }
+    }
+};
+
 Enemy.prototype.reset = function() {
     this.currentLevel = Math.floor(Math.random()* 6);
+    this.currentClimbTimer = 0;
     this.init();
 };
 

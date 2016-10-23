@@ -1,5 +1,5 @@
 var EnemiesManager = function() {
-    this.maxEnemies= 1;
+    this.maxEnemies= 5;
     this.resetTimer = 200;
     this.resetCountDown = 0;
     this.initBucket();
