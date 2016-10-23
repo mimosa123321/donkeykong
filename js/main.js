@@ -181,7 +181,7 @@ function resetStores() {
 function initKeyBoard() {
     document.addEventListener('keydown', function(event){
         if(GameStores.isStartGame) {
-            console.log("start game:" , event.keyCode);
+            // console.log("start game:" , event.keyCode);
             switch (event.keyCode) {
                 case 37:
                     player.direction = 'left';
@@ -194,11 +194,13 @@ function initKeyBoard() {
                     break;
                 case 38:
                     if (!player.isJump) {
+                        SoundManager.play(SoundManager.SOUND_CLIMB);
                         player.climb("up");
                     }
                     break;
                 case 40:
                     if (!player.isJump) {
+                        SoundManager.play(SoundManager.SOUND_CLIMB);
                         player.climb("down");
                     }
                     break;
@@ -212,7 +214,6 @@ function initKeyBoard() {
             }
         }else {
             if(event.keyCode === 13 ) { //press enter to start
-                console.log("Start game");
                 startGame();
             }
         }

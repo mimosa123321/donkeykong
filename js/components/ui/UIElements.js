@@ -57,7 +57,6 @@ var UIElements = {
     },
 
     hideIntro: function() {
-        console.log("hide");
         var el = document.getElementById("intro");
         el.className = "hide";
     },

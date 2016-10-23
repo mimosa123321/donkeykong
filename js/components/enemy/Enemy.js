@@ -1,5 +1,6 @@
 var Enemy = function(type, currentLevel) {
-    this.currentLevel = currentLevel;
+    // this.currentLevel = currentLevel;
+    this.currentLevel = 1; //change later
     this.type = type;
     this.speed = 0.5;
     this.ctx = GameStores.getCanvasContext();
@@ -10,6 +11,7 @@ var Enemy = function(type, currentLevel) {
     this.animHeight;
     this.animation;
     this.isAlive;
+    this.isAllowClimb = false;
     this.init();
 };
 
@@ -62,15 +64,13 @@ Enemy.prototype.setStartPoint = function() {
     var nextTile = topFloor[randomX + 1];
     //make sure the tile and nextTile are block before put enemy
     if(tile.type  === "block" && nextTile.type === "block") {
-        console.log("not a hole x:", tile.x , 'y:', tile.y);
+        // console.log("not a hole x:", tile.x , 'y:', tile.y);
         return {x:tile.x , y: tile.y};
     }else {
-        console.log("Enemy is places on a hole");
+        // console.log("Enemy is places on a hole");
         return null;
     }
 };
-
-
 
 Enemy.prototype.move = function() {
     var moving = Actions.move(this.pos.x, this.pos.y, EnemyStores.width, EnemyStores.height , this.direction , this.speed, false);
@@ -87,6 +87,24 @@ Enemy.prototype.collideHole = function() {
     return Actions.collideHole(this.pos.x, this.pos.y, EnemyStores.width, EnemyStores.height, this.currentLevel, EnemyStores.width);
 };
 
+Enemy.prototype.collideLadder = function() {
+    var offset = {
+        minX:0,
+        maxX:0
+    };
+
+    this.climbDirection = (Math.ceil(Math.random()*2) === 1)? "top": "down";
+    // console.log(this.direction);
+    // return Actions.collideLadder(this.pos.x, this.pos.y, EnemyStores.width, EnemyStores.height , this.currentLevel, 'down', offset);
+    return Actions.enemyCollideLadder(this.pos.x, this.pos.y, EnemyStores.width, EnemyStores.height , this.currentLevel, this.climbDirection , offset);
+
+};
+
+Enemy.prototype.startClimb = function(direction, ladder) {
+    var climbPos =  Actions.climb(this.pos.x, this.pos.y, EnemyStores.width, EnemyStores.height,direction,this.currentLevel,ladder);
+    // this.pos.x = climbPos.x;
+    // this.pos.y = climbPos.y;
+};
 
 Enemy.prototype.draw = function() {
 
@@ -96,6 +114,17 @@ Enemy.prototype.draw = function() {
                 this.direction = "right";
             } else {
                 this.direction = "left";
+            }
+        }
+
+        var myCollideLadder = this.collideLadder();
+        if(!this.isAllowClimb) {
+            if (myCollideLadder.isClimb === "up") {
+                console.log("climb up");
+                this.startClimb("up", myCollideLadder.ladder);
+            } else if(myCollideLadder.isClimb === "down") {
+                console.log("climb dpwn");
+                this.startClimb("down", myCollideLadder.ladder);
             }
         }
 

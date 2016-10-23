@@ -54,7 +54,6 @@ Donkey.prototype.setStartPoint = function() {
         var nextTile = topFloor[i + 1];
 
         if(tile.type  === "block" && nextTile.type === "block") {
-            console.log(tile.x);
             for(var j=0; j<FloorStores.getLadderMap()[this.currentLevel - 1].length; j++) {
                 var ladder = FloorStores.getLadderMap()[this.currentLevel - 1][j];
                 if(tile.x != ladder.x && nextTile.x != ladder.x) {

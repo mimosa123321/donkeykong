@@ -13,10 +13,17 @@ var SoundManager = {
     SOUND_DONKEY_WIN: 11,
     SOUND_SAVE_PRINCESS: 12,
     SOUND_FAILURE: 13,
-    context: new AudioContext(),
+    SOUND_SHOOT: 14,
+    context: null,
     currentSounds: [],
     currentSound: null,
     initialize: function(callback) {
+
+        if(typeof AudioContext === 'function') {
+            SoundManager.context = new AudioContext();
+        } else {
+            return;
+        }
 
         function onLoaded(buffers) {
             SoundManager.context.buffers = buffers;
@@ -37,11 +44,13 @@ var SoundManager = {
             'sounds/death2.wav',        // 10
             'sounds/kongwin.mp3',        // 11
             'sounds/saveprincess.mp3',        // 12
-            'sounds/failure.mp3'         // 13
+            'sounds/failure.mp3',         // 13
+            'sounds/shoot.wav'         // 14
         ], onLoaded);
         loader.load();
     },
     resetSound: function(soundIndex) {
+        if(!SoundManager.context) { return; };
         var i = 0;
         for(i; i < SoundManager.currentSounds.length; i++) {
             if(SoundManager.currentSounds[i].soundIndex === soundIndex) {
@@ -51,6 +60,7 @@ var SoundManager = {
         }
     },
     stop:function() {
+        if(!SoundManager.context) { return; };
         if(this.currentSound) {
             this.currentSound.stop();
         }
@@ -58,6 +68,7 @@ var SoundManager = {
     },
 
     play: function(soundIndex) {
+        if(!SoundManager.context) { return; };
         if(!SoundManager.context.buffers) {
             return;
         }
