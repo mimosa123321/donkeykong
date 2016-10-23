@@ -216,7 +216,7 @@ function initKeyBoard() {
         }else {
             if(event.keyCode === 13 ) { //press enter to start
                 if(isInitSound) {
-                    console.log("start game");
+                    // console.log("start game");
                     startGame();
                 }
             }
@@ -225,7 +225,7 @@ function initKeyBoard() {
         if(PlayerStores.totalLife <= 0 || GameStores.level > GameStores.maxLevel) {
             if(event.keyCode === 13 ) { //press enter to start
                 // restart game
-                console.log("restart");
+                // console.log("restart");
                 window.location.reload();
             }
         }
