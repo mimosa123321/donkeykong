@@ -26,7 +26,7 @@ Enemy.prototype.init = function() {
     this.isDetectClimb = true;
     this.isClimbing = false;
     this.currentClimbTimer = 0;
-    this.isRandomClimb = false;
+    this.isRandomClimb = true;
     var startPoint = this.setStartPoint();
     if(startPoint !== null) {
         this.pos = {
@@ -130,28 +130,19 @@ Enemy.prototype.draw = function() {
 
         var myCollideLadder = this.collideLadder();
         if(this.isDetectClimb) {
-            if (myCollideLadder.isClimb === "up") {
-                if(!this.isRandomClimb) {
-                    if( (Math.ceil(Math.random()*2) === 1)) {
-                        this.isDetectClimb = false;
-                        this.isClimbing = false;
-                        this.isFinishClimb = true;
-                        return;
-                    }
-                    this.isRandomClimb = true;
+            if(this.isRandomClimb) { //randomize the change of going down/up
+                if( (Math.ceil(Math.random()*2) === 1)) {
+                    this.isDetectClimb = false;
+                    this.isClimbing = false;
+                    this.isFinishClimb = true;
+                    return;
                 }
+                this.isRandomClimb = false;
+            }
+            if (myCollideLadder.isClimb === "up") {
                 this.isClimbing = true;
                 this.startClimb("up", myCollideLadder.ladder);
             } else if(myCollideLadder.isClimb === "down") {
-                if(!this.isRandomClimb) {
-                    if( (Math.ceil(Math.random()*2) === 1)) {
-                        this.isDetectClimb = false;
-                        this.isClimbing = false;
-                        this.isFinishClimb = true;
-                        return;
-                    }
-                    this.isRandomClimb = true;
-                }
                 this.isClimbing = true;
                 this.startClimb("down", myCollideLadder.ladder);
 
@@ -162,6 +153,7 @@ Enemy.prototype.draw = function() {
             this.currentClimbTimer += 1;
             if(this.currentClimbTimer >= this.resetClimbTimer) {
                 this.isDetectClimb = true;
+                this.isRandomClimb = true;
                 this.currentClimbTimer = 0;
             }
         }
