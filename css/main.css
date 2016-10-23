@@ -145,7 +145,14 @@ html, body {
     transform: translate3d(0, 0,0);
 }
 
-#wrapper #panel #gameOver #gameoverImg,
+#wrapper #panel #gameOver #gameoverImg {
+    position: relative;
+    width: 600px;
+    height: 300px;
+    margin: 60px auto 30px auto;
+    background-size: cover;
+}
+
 #wrapper #panel #win #winImg {
     position: relative;
     width: 100%;
