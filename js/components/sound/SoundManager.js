@@ -22,7 +22,7 @@ var SoundManager = {
             'sounds/hammer_punch.wav',  // 0
             'sounds/death.mp3',         // 1
             'sounds/hammer.wav',        // 2
-            'sounds/throwbarrel.mp3',   // 3
+            'sounds/throwbarrel.wav',   // 3
             'sounds/win.mp3',           // 4
             'sounds/intro.mp3',         // 5
             'sounds/dkwin.mp3',         // 6
