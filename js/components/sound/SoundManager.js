@@ -14,6 +14,7 @@ var SoundManager = {
     SOUND_SAVE_PRINCESS: 12,
     SOUND_FAILURE: 13,
     SOUND_SHOOT: 14,
+    SOUND_WIN_OUTRO: 15,
     context: null,
     currentSounds: [],
     currentSound: null,
@@ -45,7 +46,8 @@ var SoundManager = {
             'sounds/kongwin.mp3',        // 11
             'sounds/saveprincess.mp3',        // 12
             'sounds/failure.mp3',         // 13
-            'sounds/shoot.wav'         // 14
+            'sounds/shoot.wav',         // 14
+            'sounds/win_outro.mp3'         // 15
         ], onLoaded);
         loader.load();
     },

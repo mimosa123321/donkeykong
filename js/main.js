@@ -131,7 +131,7 @@ function goNextLevel() {
     if(GameStores.level > GameStores.maxLevel) {
         setTimeout(function(){
             UIElements.showPanel("win");
-            SoundManager.play(SoundManager.SOUND_SAVE_PRINCESS);
+            // SoundManager.play(SoundManager.SOUND_SAVE_PRINCESS);
         },1500);
         return;
     }

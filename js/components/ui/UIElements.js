@@ -20,6 +20,7 @@ var UIElements = {
                 break;
 
             case "win":
+                SoundManager.play(SoundManager.SOUND_WIN_OUTRO);
                 this.win();
                 break;
 
@@ -102,6 +103,8 @@ var UIElements = {
     win:function() {
         var el = document.getElementById("win");
         el.className = "show";
+        var mario = document.querySelector(".mariojump");
+        mario.classList.add("start");
     },
 
     hideWin:function() {
