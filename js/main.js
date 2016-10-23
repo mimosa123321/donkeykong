@@ -214,7 +214,16 @@ function initKeyBoard() {
             }
         }else {
             if(event.keyCode === 13 ) { //press enter to start
+                console.log("start game");
                 startGame();
+            }
+        }
+
+        if(PlayerStores.totalLife <= 0 || GameStores.level > GameStores.maxLevel) {
+            if(event.keyCode === 13 ) { //press enter to start
+                // restart game
+                console.log("restart");
+                window.location.reload();
             }
         }
     });
