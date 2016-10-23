@@ -86,7 +86,7 @@
     animation-fill-mode: forwards;
 }
 
-#intro p{
+#intro p.startText{
     animation: show-text 1s linear infinite;
     /*-webkit-animation-fill-mode: forwards;*/
     animation-fill-mode: forwards;
