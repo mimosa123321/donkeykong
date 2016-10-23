@@ -102,8 +102,8 @@ Enemy.prototype.collideLadder = function() {
 
 Enemy.prototype.startClimb = function(direction, ladder) {
     var climbPos =  Actions.climb(this.pos.x, this.pos.y, EnemyStores.width, EnemyStores.height,direction,this.currentLevel,ladder);
-    // this.pos.x = climbPos.x;
-    // this.pos.y = climbPos.y;
+    this.pos.x = climbPos.x;
+    this.pos.y = climbPos.y;
 };
 
 Enemy.prototype.draw = function() {
@@ -118,15 +118,14 @@ Enemy.prototype.draw = function() {
         }
 
         var myCollideLadder = this.collideLadder();
-        if(!this.isAllowClimb) {
+        console.log(myCollideLadder.isClimb);
+        /*if(!this.isAllowClimb) {
             if (myCollideLadder.isClimb === "up") {
-                console.log("climb up");
                 this.startClimb("up", myCollideLadder.ladder);
             } else if(myCollideLadder.isClimb === "down") {
-                console.log("climb dpwn");
                 this.startClimb("down", myCollideLadder.ladder);
             }
-        }
+        }*/
 
         if(this.pos.x <= 0) {
             this.direction = "right";

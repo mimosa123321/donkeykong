@@ -154,7 +154,6 @@ var Actions = {
 
             //czeck collision with ladder
             if(posX > upLadder.x + offset.minX && posX + width < upLadder.x + FloorStores.ladderWidth) {
-                console.log("can up");
                 return {isClimb: "up", ladder: upLadder} ;
             }else {
                 continue;
@@ -166,7 +165,6 @@ var Actions = {
 
             //czeck collision with ladder
             if(posX > downLadder.x + offset.minX && posX + width < downLadder.x + FloorStores.ladderWidth) {
-                console.log("can down");
                 return {isClimb: "down", ladder: downLadder};
             }else {
                 continue;
@@ -179,9 +177,10 @@ var Actions = {
         var posX = x,
             posY = y,
             destY;
+        console.log('climbing');
         switch (direction) {
             case "up":
-                posY -= 4;
+                posY -= 1;
                 destY = FloorStores.getLevels()[currentLevel + 1].posY; //destY is at one top level
                 if(posY + height <= destY ) { //if reach the destination, climb is not allowed
                     posY = destY - height;
@@ -189,7 +188,7 @@ var Actions = {
                 break;
 
             case "down":
-                posY += 4;
+                posY += 1;
                 destY = FloorStores.getLevels()[currentLevel - 1].posY;
                 if(posY + height >= destY ) {
                     posY = destY - height;
@@ -204,7 +203,7 @@ var Actions = {
         // this.pos.y = posY;
 
         // console.log(ladder);
-        // return {x:0 + 8, y:posY}
+        return {x:ladder.x + 8, y:posY}
 
     }
 };
