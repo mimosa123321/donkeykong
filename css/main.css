@@ -189,7 +189,8 @@ html, body {
     margin-top: 40px;
 }
 
-#wrapper #panel #gameOver .finalScore {
+#wrapper #panel #gameOver .finalScore,
+#wrapper #panel #win .finalScore{
     color: white;
     text-align: center;
     font-size: 44px;
