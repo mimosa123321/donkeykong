@@ -135,6 +135,8 @@ var UIElements = {
     updateScore: function() {
         var el = document.getElementById("score");
         el.innerHTML = GameStores.totalScore;
+
+        $(".finalScore").html(GameStores.totalScore);
     }
 };
 
