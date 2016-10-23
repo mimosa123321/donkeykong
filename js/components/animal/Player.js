@@ -44,7 +44,7 @@ Player.prototype.collideBucket = function() {
         var bucket = BucketStores.buckets[i];
         if(bucket.isAlive) {
             if (this.pos.x + PlayerStores.bodyWidth - 4 >= bucket.pos.x + 7 && this.pos.x <= bucket.pos.x + bucket.radius && this.pos.y + PlayerStores.bodyHeight >= bucket.pos.y - bucket.radius && this.pos.y <= bucket.pos.y) {
-                // this.die();
+                this.die();
                 return;
             }
         }
