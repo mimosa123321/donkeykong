@@ -219,6 +219,11 @@ html, body {
     top: 20px;
 }
 
+#marioLife img {
+    width: 20%;
+    height: auto;
+}
+
 #gameLevels {
     position: absolute;
     right: 20px;

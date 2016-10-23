@@ -111,7 +111,7 @@ Bucket.prototype.draw = function() {
             this.currentLevel = updateLevel;
         }
     }
-
+    
     if(this.animation) {
         this.animPosX = this.animation.posX;
         this.animposY = this.animation.posY;

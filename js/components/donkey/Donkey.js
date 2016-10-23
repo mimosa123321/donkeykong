@@ -5,7 +5,7 @@ var Donkey = function() {
     this.isBeat = true;
     this.isStartIntro = false;
     this.currentTime = 0;
-    this.introTimer = 10;
+    this.introTimer = 400;
 
     this.currentThrowTimer= 0;
     this.throwTimer= 200;

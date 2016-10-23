@@ -13,6 +13,7 @@ var Enemy = function(type, currentLevel) {
     this.isAlive;
     this.isDetectClimb;
     this.currentClimbTimer;
+    this.isRandomClimb;
     this.resetClimbTimer = 300;
     this.isClimbing;
     this.init();
@@ -25,6 +26,7 @@ Enemy.prototype.init = function() {
     this.isDetectClimb = true;
     this.isClimbing = false;
     this.currentClimbTimer = 0;
+    this.isRandomClimb = true;
     var startPoint = this.setStartPoint();
     if(startPoint !== null) {
         this.pos = {
@@ -127,7 +129,16 @@ Enemy.prototype.draw = function() {
         }
 
         var myCollideLadder = this.collideLadder();
-        if(this.isDetectClimb && this.currentLevel < 5) {
+        if(this.isDetectClimb) {
+            if(this.isRandomClimb) { //randomize the change of going down/up
+                if( (Math.ceil(Math.random()*2) === 1)) {
+                    this.isDetectClimb = false;
+                    this.isClimbing = false;
+                    this.isFinishClimb = true;
+                    return;
+                }
+                this.isRandomClimb = false;
+            }
             if (myCollideLadder.isClimb === "up") {
                 this.isClimbing = true;
                 this.startClimb("up", myCollideLadder.ladder);
@@ -142,6 +153,7 @@ Enemy.prototype.draw = function() {
             this.currentClimbTimer += 1;
             if(this.currentClimbTimer >= this.resetClimbTimer) {
                 this.isDetectClimb = true;
+                this.isRandomClimb = true;
                 this.currentClimbTimer = 0;
             }
         }
@@ -156,11 +168,11 @@ Enemy.prototype.draw = function() {
 
         this.animation.walk(this.type, this.direction);
         this.move();
-    }
 
-    if (!this.isClimbing) {
-        var updateLevel = this.updateFloorLevel();
-        this.currentLevel = updateLevel;
+        if (!this.isClimbing) {
+            var updateLevel = this.updateFloorLevel();
+            this.currentLevel = updateLevel;
+        }
     }
 
     if(this.animation) {

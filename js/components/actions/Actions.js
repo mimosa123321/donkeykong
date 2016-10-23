@@ -140,7 +140,11 @@ var Actions = {
         if (currentLevel === 0) { //if level 0, no down level
             upLadders = FloorStores.getLadderMap()[currentLevel];
             downLadders = [];
-        }else {
+        }else if(currentLevel === 5) {
+            upLadders = [];
+            downLadders = FloorStores.getLadderMap()[currentLevel-1];
+        }
+        else{
             upLadders = FloorStores.getLadderMap()[currentLevel];
             downLadders = FloorStores.getLadderMap()[currentLevel-1];
         }
